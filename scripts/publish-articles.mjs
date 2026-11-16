@@ -6,6 +6,7 @@ const read = path => readFile(new URL(path, root), "utf8");
 const escape = text => String(text).replace(/[&<>"']/g, character =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 const articles = JSON.parse(await read("data/articles.json"));
+const linkedArticles = JSON.parse(await read("data/linked-articles.json"));
 const images = JSON.parse(await read("data/article-images.json"));
 const context = { window: {} };
 vm.runInNewContext(await read("assets/js/site-config.js"), context);
@@ -21,15 +22,27 @@ const dateLabel = date => new Intl.DateTimeFormat("en-US", {
 }).format(new Date(`${date}T00:00:00Z`));
 const articleLink = (article, prefix) => `${prefix}${article.slug}/index.html`;
 const card = (article, prefix, featured = false) => {
-  const link = articleLink(article, prefix);
+  const link = article.linked ? escape(article.source) : articleLink(article, prefix);
+  const externalAttributes = article.linked ? ' target="_blank" rel="noopener noreferrer"' : "";
+  const linkText = article.linked ? "Read on LinkedIn ↗" : "Read on this website →";
   const imagePrefix = featured ? "" : "../";
+  const visual = article.cover
+    ? `<div class="${featured ? "feature-visual" : "visual"} cover-visual" aria-hidden="true"><img src="${imagePrefix}assets/images/covers/${escape(article.cover)}" alt="" width="1280" height="719" loading="lazy"></div>`
+    : `<div class="${featured ? "feature-visual" : "visual"}" aria-hidden="true"></div>`;
+  const date = article.date ? `<time datetime="${article.date}">${dateLabel(article.date)}</time>` : "Publication date unavailable";
   return `<article class="${featured ? "feature-card" : "article-card"}"${featured ? "" : ` data-category="${escape(article.filters.join(" "))}"`}>
-<div class="${featured ? "feature-visual" : "visual"} cover-visual" aria-hidden="true"><img src="${imagePrefix}assets/images/covers/${escape(article.cover)}" alt="" width="1280" height="719" loading="lazy"></div>
-<div class="card-body"><div class="meta">${escape(article.category)} · <time datetime="${article.date}">${dateLabel(article.date)}</time></div>
-<h${featured ? 3 : 2}><a href="${link}">${escape(article.title)}</a></h${featured ? 3 : 2}>
-<p>${escape(article.description)}</p><a class="text-link" href="${link}">Read on this website →</a></div></article>`;
+${visual}
+<div class="card-body"><div class="meta">${escape(article.category)} · ${date}</div>
+<h${featured ? 3 : 2}><a href="${link}"${externalAttributes}>${escape(article.title)}</a></h${featured ? 3 : 2}>
+<p>${escape(article.description)}</p><a class="text-link" href="${link}"${externalAttributes}>${linkText}</a></div></article>`;
 };
 const pageOutputs = [];
+for (const article of linkedArticles) {
+  if (article.cover !== null && !/^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/.test(article.cover)) throw new Error(`Invalid cover: ${article.title}`);
+  if (article.date !== null && !/^\d{4}-\d{2}-\d{2}$/.test(article.date)) throw new Error(`Invalid date: ${article.title}`);
+  if (new URL(article.source).origin !== "https://www.linkedin.com") throw new Error(`Invalid article source: ${article.title}`);
+  if (article.cover !== null) await readFile(new URL(`assets/images/covers/${article.cover}`, root));
+}
 for (const [index, article] of articles.entries()) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug)) throw new Error("Invalid article slug.");
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/.test(article.cover)) throw new Error(`Invalid cover: ${article.slug}`);
@@ -105,10 +118,15 @@ const replaceSection = (html, name, content) => {
   const to = html.indexOf(end, from);
   return `${html.slice(0, from)}\n${content}\n${html.slice(to)}`;
 };
-const journalOutput = replaceSection(journal, "published-articles",
-  `<div class="journal-grid">\n${articles.map(article => card(article, "articles/")).join("\n")}\n</div>`);
+const journalArticles = [...articles, ...linkedArticles.map(article => ({ ...article, linked: true }))]
+  .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+const countPattern = /<p class="collection-count" id="journal-total">[^<]*<\/p>/g;
+if ([...journal.matchAll(countPattern)].length !== 1) throw new Error("Expected one journal total.");
+const journalWithCount = journal.replace(countPattern, `<p class="collection-count" id="journal-total">${journalArticles.length} ${journalArticles.length === 1 ? "article" : "articles"} in total</p>`);
+const journalOutput = replaceSection(journalWithCount, "published-articles",
+  `<div class="journal-grid">\n${journalArticles.map(article => card(article, "articles/")).join("\n")}\n</div>`);
 const homeOutput = replaceSection(await read("index.html"), "featured-articles",
-  `<div class="feature-grid">\n${articles.slice(0, 2).map(article => card(article, "journal/articles/", true)).join("\n")}\n</div>`);
+  `<div class="feature-grid">\n${journalArticles.filter(article => article.date).slice(0, 2).map(article => card(article, "journal/articles/", true)).join("\n")}\n</div>`);
 const corePaths = ["", "about.html", "journal/", "certifications.html", "projects.html", "contact.html"];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -121,4 +139,4 @@ for (const output of pageOutputs) {
 await writeFile(new URL("journal/index.html", root), journalOutput);
 await writeFile(new URL("index.html", root), homeOutput);
 await writeFile(new URL("sitemap.xml", root), sitemap);
-console.log(`Published ${articles.length} static articles, journal cards, home features and sitemap.`);
+console.log(`Published ${articles.length} static articles and ${linkedArticles.length} linked articles, journal cards, home features and sitemap.`);

@@ -39,6 +39,16 @@
   const cards = [...document.querySelectorAll("[data-category]")];
   const search = document.querySelector("#article-search");
   const emptyState = document.querySelector(".empty-note");
+  const journalTotal = document.querySelector("#journal-total");
+  const projectTotal = document.querySelector("#project-total");
+  if (journalTotal) {
+    const count = document.querySelectorAll(".journal-grid .article-card").length;
+    journalTotal.textContent = `${count} ${count === 1 ? "article" : "articles"} in total`;
+  }
+  if (projectTotal) {
+    const count = document.querySelectorAll(".project-grid .project").length;
+    projectTotal.textContent = `${count} ${count === 1 ? "project" : "projects"} in total`;
+  }
   let activeFilter = "all";
 
   const updateArticles = () => {

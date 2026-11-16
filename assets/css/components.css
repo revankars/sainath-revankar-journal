@@ -23,6 +23,7 @@
 .project-links{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:20px}
 .project-links .text-link{display:inline-flex;align-items:center;min-height:44px}
 .project-top.cover-visual,.article-card .visual.cover-visual,.feature-visual.cover-visual{height:auto;min-height:0;aspect-ratio:1280 / 719;background:var(--sage-soft)}
+.article-card .visual:not(.cover-visual){height:auto;aspect-ratio:1280 / 719}
 .cover-visual::before,.cover-visual::after{content:none}
 .cover-visual img{width:100%;height:100%;object-fit:cover}
 .footer-inner{flex-wrap:wrap}
@@ -60,6 +61,7 @@
 .journal-controls label{font-size:.78rem;color:var(--forest);font-weight:700}
 .journal-controls input{border:1px solid #aeb9a3;background:#fff;padding:12px 14px;color:var(--ink);font:inherit}
 .journal-controls input:focus-visible{outline-offset:2px}
+.collection-count{margin:0 0 20px;color:var(--muted);font-size:.85rem;font-weight:600}
 .editorial-note{margin-top:22px;color:var(--muted);font-size:.8rem}
 .article-heading{padding-bottom:35px}
 .article-heading h1{max-width:1100px;font-size:clamp(2rem,4.2vw,4rem);line-height:1.12;overflow-wrap:anywhere}

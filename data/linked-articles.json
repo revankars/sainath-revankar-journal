@@ -1,0 +1,425 @@
+[
+  {
+    "title": "When the Campaign Disappears: Bringing Lost Attribution Back to Your Leads in Marketo",
+    "description": "A controlled Marketo Lead Uploader workflow for restoring campaign data to existing leads and supporting attribution reporting.",
+    "category": "Marketo & Attribution",
+    "filters": ["analytics", "architecture", "data"],
+    "date": "2026-11-15",
+    "source": "https://www.linkedin.com/pulse/when-campaign-disappears-bringing-lost-attribution-back-revankar-hvshc/",
+    "cover": "marketo-lead-uploader.jpg"
+  },
+  {
+    "title": "Adobe Target to CJA: The Reporting Gap That Can Surface Days Before Go-Live",
+    "description": "Why Target event collection and CJA reporting readiness are distinct, and how reporting-source configuration and lookup metadata connect them.",
+    "category": "Adobe Target & CJA",
+    "filters": ["analytics", "aep", "personalization", "architecture"],
+    "date": "2026-11-14",
+    "source": "https://www.linkedin.com/pulse/adobe-target-cja-reporting-gap-can-surface-days-before-revankar-h7erc/",
+    "cover": "target-cja-reporting-gap.jpg"
+  },
+  {
+    "title": "What If Your Best Audience Already Exists Outside Adobe Experience Platform",
+    "description": "A practical look at bringing externally defined audience metadata and membership into Real-Time CDP for segmentation and activation.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "personalization", "architecture", "data"],
+    "date": "2026-09-07",
+    "source": "https://www.linkedin.com/pulse/what-your-best-audience-already-exists-outside-adobe-sainath-revankar-vdyuc/",
+    "cover": "external-audiences.jpg"
+  },
+  {
+    "title": "Demystifying Complex Fields in Adobe Experience Platform Query Service",
+    "description": "Navigate nested structs, arrays and maps in Query Service by understanding the underlying schema and following field paths.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "data", "analytics"],
+    "date": "2026-08-13",
+    "source": "https://www.linkedin.com/pulse/demystifying-complex-fields-adobe-experience-platform-revankar-qbtzc/",
+    "cover": "aep-complex-fields.jpg"
+  },
+  {
+    "title": "Empty Beacons Aren't Empty Data: What DevTools Doesn't Tell You About Adobe Experience Platform Web SDK",
+    "description": "An exploration of Web SDK requests during page navigation and why implementation teams should validate collection end to end.",
+    "category": "Adobe Web SDK",
+    "filters": ["aep", "analytics", "data"],
+    "date": "2026-07-16",
+    "source": "https://www.linkedin.com/pulse/empty-beacons-arent-data-what-devtools-doesnt-tell-you-revankar-0tnxc/",
+    "cover": "empty-beacons.jpg"
+  },
+  {
+    "title": "Integrating SA360 Data Into Adobe Analytics Using Data Sources for Enhanced Reporting",
+    "description": "Approaches to combining Search Ads 360 data with Adobe Analytics, including data source mapping, validation and reporting considerations.",
+    "category": "Adobe Analytics",
+    "filters": ["analytics", "architecture", "data"],
+    "date": "2026-07-09",
+    "source": "https://www.linkedin.com/pulse/integrating-sa360-data-adobe-analytics-using-sources-sainath-revankar-yuujc/",
+    "cover": "sa360-data-sources.jpg"
+  },
+  {
+    "title": "Offer Decisioning in AJO: How Weather Can Power Smarter, Real-Time Offers on Your Website",
+    "description": "A contextual personalization example using weather signals and Adobe Journey Optimizer offer decisioning.",
+    "category": "Adobe Journey Optimizer",
+    "filters": ["aep", "personalization", "architecture"],
+    "date": "2026-07-04",
+    "source": "https://www.linkedin.com/pulse/offer-decisioning-ajo-how-weather-can-power-smarter-offers-revankar-oivac/",
+    "cover": "weather-offer-decisioning.jpg"
+  },
+  {
+    "title": "Adobe Target with AEP Web SDK: Understanding Requests, Rendering, Display Events, and Impression Tracking",
+    "description": "Distinguish requesting, rendering and display notifications when implementing Adobe Target with the Web SDK.",
+    "category": "Adobe Target & Web SDK",
+    "filters": ["aep", "personalization", "analytics", "architecture"],
+    "date": "2026-06-24",
+    "source": "https://www.linkedin.com/pulse/adobe-target-aep-web-sdk-understanding-requests-display-revankar-yru2c/",
+    "cover": "target-web-sdk-impressions.jpg"
+  },
+  {
+    "title": "Adobe Target Trigger Views: at.js 2.x vs Web SDK — What You Need to Know",
+    "description": "A practical comparison of trigger views and implementation workflows for Adobe Target on single-page applications.",
+    "category": "Adobe Target & Web SDK",
+    "filters": ["aep", "personalization", "architecture"],
+    "date": "2026-06-15",
+    "source": "https://www.linkedin.com/pulse/adobe-target-trigger-views-atjs-2x-vs-web-sdk-what-you-revankar-tytqc/",
+    "cover": "target-trigger-views.jpg"
+  },
+  {
+    "title": "Identity, Edge, and Personalization: What Every AEP Practitioner Should Know",
+    "description": "Explore identity configuration, Edge and Hub processing, and the architectural choices behind personalization.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "personalization", "architecture", "data"],
+    "date": "2026-06-12",
+    "source": "https://www.linkedin.com/pulse/identity-edge-personalization-what-every-aep-should-know-revankar-1xewc/",
+    "cover": "identity-edge-personalization.jpg"
+  },
+  {
+    "title": "Building XDM in Adobe Experience Platform: From Design to Real-Time Customer Profile",
+    "description": "A guide to XDM schema design, identities, relationships and governance for Real-Time Customer Profile.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2026-05-08",
+    "source": "https://www.linkedin.com/pulse/building-xdm-adobe-experience-platform-from-design-profile-revankar-rxzdc/",
+    "cover": "building-xdm.jpg"
+  },
+  {
+    "title": "A Week That Changed How I Think About Experience Orchestration — Journey Optimizer Foundations Bootcamp (March 17-20, 2026)",
+    "description": "Reflections on connecting data, content, decisioning and orchestration from an Adobe Journey Optimizer bootcamp.",
+    "category": "Adobe Journey Optimizer",
+    "filters": ["aep", "personalization", "architecture"],
+    "date": "2026-03-25",
+    "source": "https://www.linkedin.com/pulse/week-changed-how-i-think-experience-orchestration-journey-revankar-153hc/",
+    "cover": "journey-optimizer-bootcamp.jpg"
+  },
+  {
+    "title": "Monitoring and Validating Events with Adobe Experience Platform Assurance",
+    "description": "Use Assurance to inspect and validate events and understand real-time experience behavior.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2026-03-24",
+    "source": "https://www.linkedin.com/pulse/monitoring-validating-events-adobe-experience-sainath-revankar-z08rc/",
+    "cover": "aep-assurance-events.jpg"
+  },
+  {
+    "title": "Activating at the Right Speed: When to Use Edge, Streaming, or Batch in Adobe Experience Platform",
+    "description": "Compare Edge, streaming and batch activation patterns and match the approach to the customer experience.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "personalization", "architecture", "data"],
+    "date": "2026-03-22",
+    "source": "https://www.linkedin.com/pulse/activating-right-speed-when-use-edge-streaming-batch-adobe-revankar-xrm4c/",
+    "cover": "edge-streaming-batch.jpg"
+  },
+  {
+    "title": "Adobe Experience Platform Web SDK: One Click, One Collect — Eliminating Event Inflation at the Edge",
+    "description": "An approach to consolidating click tracking and Activity Map context to reduce duplicate Web SDK events.",
+    "category": "Adobe Web SDK",
+    "filters": ["aep", "analytics", "data"],
+    "date": "2026-02-22",
+    "source": "https://www.linkedin.com/pulse/adobe-experience-platform-web-sdk-one-click-collect-event-revankar-ievlc/",
+    "cover": "one-click-one-collect.jpg"
+  },
+  {
+    "title": "Personalizing Known Users Without AJO: Driving Upsell and Cross-Sell with Adobe Experience Platform and Adobe Target",
+    "description": "Explore known-user personalization and upsell scenarios using Adobe Experience Platform and Adobe Target.",
+    "category": "Adobe Target & AEP",
+    "filters": ["aep", "personalization", "architecture"],
+    "date": "2026-02-08",
+    "source": "https://www.linkedin.com/pulse/personalizing-known-users-without-ajo-driving-upsell-adobe-revankar-2fvhc/",
+    "cover": "known-user-personalization.jpg"
+  },
+  {
+    "title": "Driving Smarter Personalization in AJO with Ranking-Based Decisioning",
+    "description": "Use ranking formulas and profile attributes to prioritize personalized offers in Adobe Journey Optimizer.",
+    "category": "Adobe Journey Optimizer",
+    "filters": ["aep", "personalization"],
+    "date": "2026-01-30",
+    "source": "https://www.linkedin.com/pulse/driving-smarter-personalization-ajo-ranking-based-sainath-revankar-t3mpc/",
+    "cover": "ajo-ranking-decisioning.jpg"
+  },
+  {
+    "title": "From Spreadsheet to Story: Turning Webinar Attendees into Personalized Journeys with Adobe Journey Optimizer",
+    "description": "Turn a webinar attendee list into a personalized follow-up journey using Adobe Experience Platform and Journey Optimizer.",
+    "category": "Adobe Journey Optimizer",
+    "filters": ["aep", "personalization", "data"],
+    "date": "2026-01-21",
+    "source": "https://www.linkedin.com/pulse/from-spreadsheet-story-turning-webinar-attendees-adobe-revankar-uo7pf/",
+    "cover": "webinar-personalized-journeys.jpg"
+  },
+  {
+    "title": "How to Implement Adobe Web SDK with Adobe Tags and Tealium iQ",
+    "description": "Compare the implementation workflows and components for deploying Web SDK through Adobe Tags and Tealium iQ.",
+    "category": "Adobe Web SDK",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2026-01-17",
+    "source": "https://www.linkedin.com/pulse/how-implement-adobe-web-sdk-tags-tealium-iq-sainath-revankar-qeeff/",
+    "cover": "web-sdk-tags-tealium.jpg"
+  },
+  {
+    "title": "Dynamic Datastreams in Adobe Experience Platform: A Smarter Way to Route Events",
+    "description": "An overview of rule-based datastream routing and how it differs from datastream overrides.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2026-01-15",
+    "source": "https://www.linkedin.com/pulse/dynamic-datastreams-adobe-experience-platform-smarter-revankar-np7xf/",
+    "cover": "dynamic-datastreams.jpg"
+  },
+  {
+    "title": "Unlocking True AEP Intelligence: Why n8n + LLMs Go Far Beyond Adobe’s AI Assistant",
+    "description": "A 2025 perspective on using n8n, language models and AEP APIs to explore platform data.",
+    "category": "Adobe Experience Platform & AI",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2025-11-25",
+    "source": "https://www.linkedin.com/pulse/unlocking-true-aep-intelligence-why-n8n-llms-go-far-beyond-revankar-wbatc/",
+    "cover": "aep-intelligence-n8n-llms.jpg"
+  },
+  {
+    "title": "From Questions to Insights: AI-Driven SQL Agents Bring Your Adobe Analytics Data to Life",
+    "description": "Explore SQL agents as an approach to asking questions of Adobe Analytics data.",
+    "category": "Adobe Analytics & AI",
+    "filters": ["analytics", "data", "architecture"],
+    "date": "2025-10-07",
+    "source": "https://www.linkedin.com/pulse/from-questions-insights-ai-driven-sql-agents-bring-your-revankar-fd2ic/",
+    "cover": "ai-sql-agents.jpg"
+  },
+  {
+    "title": "Streaming Meta Marketing API Data into Adobe Experience Platform (AEP) for Unified Customer Journey Analytics",
+    "description": "Explore streaming Meta Marketing API data into AEP for Customer Journey Analytics.",
+    "category": "AEP & CJA",
+    "filters": ["aep", "analytics", "data", "architecture"],
+    "date": "2025-09-12",
+    "source": "https://www.linkedin.com/pulse/streaming-meta-marketing-api-data-adobe-experience-aep-revankar-vtqec/",
+    "cover": "meta-marketing-aep.jpg"
+  },
+  {
+    "title": "Automated Data Health: Monitoring Counts with Adobe Customer Journey Analytics API",
+    "description": "An approach to automated data count monitoring with the Customer Journey Analytics API.",
+    "category": "Customer Journey Analytics",
+    "filters": ["analytics", "data"],
+    "date": "2025-07-30",
+    "source": "https://www.linkedin.com/pulse/automated-data-health-monitoring-counts-adobe-journey-revankar-dczuc/",
+    "cover": "cja-data-health.jpg"
+  },
+  {
+    "title": "The Secret Weapon Behind Holistic Customer Insights: Identity Stitching in Adobe CJA",
+    "description": "How identity stitching connects interactions across devices and customer touchpoints in CJA.",
+    "category": "Customer Journey Analytics",
+    "filters": ["analytics", "data", "architecture"],
+    "date": "2025-05-05",
+    "source": "https://www.linkedin.com/pulse/secret-weapon-behind-holistic-customer-insights-adobe-revankar-me6fc/",
+    "cover": "cja-identity-stitching.jpg"
+  },
+  {
+    "title": "Server-Side Marketing Migration: Embracing the Future of Digital Analytics",
+    "description": "A guide to migrating client-side marketing pixels to server-side connectors with Tealium, co-authored with Sravanth Venna.",
+    "category": "Server-Side Marketing",
+    "filters": ["analytics", "architecture", "data"],
+    "date": "2025-04-18",
+    "source": "https://www.linkedin.com/pulse/server-side-marketing-migration-embracing-future-digital-revankar-2rk0c/",
+    "cover": "server-side-marketing.jpg"
+  },
+  {
+    "title": "Leveraging the Google Search Console API: A Strategic Approach to Search Data Management",
+    "description": "A look at programmatic search data management and automation with the Google Search Console API.",
+    "category": "Search & Analytics",
+    "filters": ["analytics", "data"],
+    "date": "2025-03-15",
+    "source": "https://www.linkedin.com/pulse/leveraging-google-search-console-api-strategic-data-sainath-revankar-kpryc/",
+    "cover": "google-search-console-api.jpg"
+  },
+  {
+    "title": "Case Study: Server-Side Migration for Enhanced Website Performance and Data Accuracy",
+    "description": "A case study on moving website tracking to a server-side approach.",
+    "category": "Server-Side Marketing",
+    "filters": ["analytics", "architecture", "data"],
+    "date": "2025-03-14",
+    "source": "https://www.linkedin.com/pulse/case-study-server-side-migration-enhanced-website-data-revankar-gdeee/",
+    "cover": "server-side-case-study.jpg"
+  },
+  {
+    "title": "With WebSDK vs. Without WebSDK: Faster, Smarter, and More Efficient Personalization",
+    "description": "A comparison of data collection and personalization approaches with and without Adobe Web SDK.",
+    "category": "Adobe Web SDK",
+    "filters": ["aep", "personalization", "architecture"],
+    "date": "2025-03-04",
+    "source": "https://www.linkedin.com/pulse/websdk-vs-without-faster-smarter-more-efficient-sainath-revankar-evjfc/",
+    "cover": "with-without-web-sdk.jpg"
+  },
+  {
+    "title": "Protecting E-Commerce Platforms from Bot Traffic: How B2B/B2C Retail Giants Safeguard Their Billion-Dollar Digital Channels",
+    "description": "A discussion of bot traffic, its impact on retail analytics and customer experience, and mitigation approaches.",
+    "category": "Digital Experience",
+    "filters": ["analytics", "architecture"],
+    "date": "2025-02-08",
+    "source": "https://www.linkedin.com/pulse/protecting-e-commerce-platforms-from-bot-traffic-how-b2bb2c-revankar-sijkc/",
+    "cover": "ecommerce-bot-traffic.jpg"
+  },
+  {
+    "title": "Unlocking the Power of Customer Insights with Adobe Experience Cloud's Customer Attribute",
+    "description": "Use Customer Attributes to connect customer data with analytics and personalization use cases.",
+    "category": "Adobe Experience Cloud",
+    "filters": ["analytics", "personalization", "data"],
+    "date": "2025-01-20",
+    "source": "https://www.linkedin.com/pulse/unlocking-power-customer-insights-adobe-experience-clouds-revankar-hq0bc/",
+    "cover": "customer-attributes.jpg"
+  },
+  {
+    "title": "Web Scraping for Retail Optimization Using Jupyter Notebooks on Adobe Experience Platform (AEP)",
+    "description": "An exploration of retail data gathering with Jupyter notebooks in Adobe Experience Platform.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "data"],
+    "date": "2025-01-13",
+    "source": "https://www.linkedin.com/pulse/web-scraping-retail-optimization-using-jupyter-adobe-aep-revankar-hcrmc/",
+    "cover": "retail-jupyter-aep.jpg"
+  },
+  {
+    "title": "Harnessing the Power of Adobe Experience Platform Sink Connector for Real-Time Data Ingestion from Kafka",
+    "description": "A look at using the AEP Sink Connector to ingest Kafka data for customer experience use cases.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "data", "architecture"],
+    "date": "2025-01-02",
+    "source": "https://www.linkedin.com/pulse/harnessing-power-adobe-experience-platform-sink-data-from-revankar-vtnec/",
+    "cover": "kafka-aep-sink.jpg"
+  },
+  {
+    "title": "Streamlining Personalization: Automating Catalog Creation for Adobe Target Recommendations",
+    "description": "An approach to automating catalog creation for personalized Adobe Target recommendations.",
+    "category": "Adobe Target",
+    "filters": ["personalization", "data"],
+    "date": "2024-11-18",
+    "source": "https://www.linkedin.com/pulse/streamlining-personalization-automating-catalog-adobe-revankar-ehitc/",
+    "cover": "target-recommendation-catalog.jpg"
+  },
+  {
+    "title": "Leveraging Summary Data in Adobe's Customer Journey Analytics for Non-Person-Based Data Analysis",
+    "description": "Explore combining aggregate, non-person-based data with event data in Customer Journey Analytics.",
+    "category": "Customer Journey Analytics",
+    "filters": ["analytics", "data"],
+    "date": "2024-09-22",
+    "source": "https://www.linkedin.com/pulse/leveraging-summary-data-adobes-customer-journey-sainath-revankar-mejmc/",
+    "cover": "cja-summary-data.jpg"
+  },
+  {
+    "title": "Deploying Demandbase with Tealium IQ: A Comprehensive Guide to Integrating API Data Across Multiple Profiles",
+    "description": "Integrate Demandbase API data across parent and child Tealium iQ profiles.",
+    "category": "Tealium & Demandbase",
+    "filters": ["personalization", "architecture", "data"],
+    "date": "2024-09-13",
+    "source": "https://www.linkedin.com/pulse/deploying-demandbase-tealium-iq-comprehensive-guide-api-revankar-lwxgc/",
+    "cover": "demandbase-tealium.jpg"
+  },
+  {
+    "title": "Future-Proofing Your Data Strategy: Migrating to Server-Side Tagging with Tealium EventStream",
+    "description": "A 2024 perspective on migrating from client-side tags to Tealium EventStream.",
+    "category": "Server-Side Marketing",
+    "filters": ["architecture", "data"],
+    "date": "2024-08-30",
+    "source": "https://www.linkedin.com/pulse/future-proofing-your-data-strategy-migrating-tagging-tealium-sainath-gsjzc/",
+    "cover": "tealium-eventstream.jpg"
+  },
+  {
+    "title": "Optimizing Data Integration: Coexisting AppMeasurement and WebSDK for Tight Timelines and Budgets",
+    "description": "Considerations for running Adobe AppMeasurement and Web SDK side by side during an integration.",
+    "category": "Adobe Web SDK",
+    "filters": ["aep", "analytics", "architecture", "data"],
+    "date": "2024-08-26",
+    "source": "https://www.linkedin.com/pulse/optimizing-data-integration-coexisting-appmeasurement-revankar-xtqlc/",
+    "cover": "appmeasurement-web-sdk.jpg"
+  },
+  {
+    "title": "Is AEP a CDP?",
+    "description": "An overview of Adobe Experience Platform and the Real-Time Customer Data Platform built on it.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2024-01-20",
+    "source": "https://www.linkedin.com/pulse/aep-cdp-sainath-revankar-pbm2c/",
+    "cover": "aep-and-cdp.jpg"
+  },
+  {
+    "title": "Adobe Analytics - Data Feed!",
+    "description": "An introduction to Adobe Analytics Data Feed and working with raw clickstream data.",
+    "category": "Adobe Analytics",
+    "filters": ["analytics", "data"],
+    "date": "2023-09-30",
+    "source": "https://www.linkedin.com/pulse/adobe-analytics-data-feed-sainath-revankar/",
+    "cover": null
+  },
+  {
+    "title": "Automate Lift/Confidence calculation within Adobe Analytics Workspace",
+    "description": "A walkthrough of lift and confidence calculations for metrics in Adobe Analytics Workspace.",
+    "category": "Adobe Analytics",
+    "filters": ["analytics", "personalization", "data"],
+    "date": "2023-03-26",
+    "source": "https://www.linkedin.com/pulse/automate-liftconfidence-calculation-within-adobe-sainath-revankar/",
+    "cover": "lift-confidence-workspace.jpg"
+  },
+  {
+    "title": "Backup Strategy of Adobe Launch (aka Data Collection)",
+    "description": "A backup strategy for Adobe Launch properties and data collection resources.",
+    "category": "Adobe Data Collection",
+    "filters": ["architecture", "data"],
+    "date": "2022-03-17",
+    "source": "https://www.linkedin.com/pulse/backup-strategy-adobe-launch-aka-data-collection-sainath-revankar/",
+    "cover": "adobe-launch-backup.jpg"
+  },
+  {
+    "title": "The Next Best Action with Adobe's Journey Orchestration",
+    "description": "A 2021 perspective on using journey orchestration to personalize customer experiences.",
+    "category": "Journey Orchestration",
+    "filters": ["aep", "personalization", "architecture"],
+    "date": "2021-02-11",
+    "source": "https://www.linkedin.com/pulse/next-best-action-adobes-journey-orchestration-sainath-revankar/",
+    "cover": null
+  },
+  {
+    "title": "Adobe Target Recommendations using Apriori Algorithm",
+    "description": "Explore the Apriori algorithm in the context of Adobe Target recommendations.",
+    "category": "Adobe Target",
+    "filters": ["personalization", "data"],
+    "date": "2020-09-19",
+    "source": "https://www.linkedin.com/pulse/adobe-target-recommendations-using-apriori-algorithm-sainath-revankar/",
+    "cover": null
+  },
+  {
+    "title": "LinkedIn article: Real-time event customer engagement",
+    "description": "Publication details could not be retrieved. Open the original article on LinkedIn.",
+    "category": "Customer Engagement",
+    "filters": ["aep", "personalization"],
+    "date": null,
+    "source": "https://www.linkedin.com/pulse/unlocking-instant-customer-engagement-real-time-event-revankar-wv2mc/",
+    "cover": null
+  },
+  {
+    "title": "LinkedIn article: Adobe Analytics getTimeBetweenEvents plugin",
+    "description": "Publication details could not be retrieved. Open the original article on LinkedIn.",
+    "category": "Adobe Analytics",
+    "filters": ["analytics", "data"],
+    "date": null,
+    "source": "https://www.linkedin.com/pulse/adobe-analytics-plugin-gettimebetweenevents-sainath-revankar/",
+    "cover": null
+  },
+  {
+    "title": "Custom (a.k.a SAINT) Classification in Adobe Analytics",
+    "description": "A historical walkthrough of creating and importing custom classifications for campaign data in Adobe Analytics.",
+    "category": "Adobe Analytics",
+    "filters": ["analytics", "data"],
+    "date": "2023-03-25",
+    "source": "https://www.linkedin.com/pulse/custom-aka-saint-classification-adobe-analytics-sainath-revankar/",
+    "cover": "saint-classification.jpg"
+  }
+]
