@@ -45,7 +45,7 @@
     const count = document.querySelectorAll(".project-grid .project").length;
     projectTotal.textContent = `${count} ${count === 1 ? "project" : "projects"} in total`;
   }
-  const collectionPageSize = 5;
+  const collectionPageSize = 6;
   const setupCollection = ({ grid, searchInput, filters = [], emptyState, pagination, status, itemName }) => {
     if (!grid) return;
 

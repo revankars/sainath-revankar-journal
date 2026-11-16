@@ -238,6 +238,38 @@ test("contact page configures the Medium profile link", async () => {
   assert.equal(mediumLink.rel, "noopener noreferrer");
 });
 
+test("Datorama credentials use specific links or the LinkedIn certifications fallback", async () => {
+  const html = await read("certifications.html");
+  const cards = html.match(/<article class="credential">[\s\S]*?<\/article>/g);
+  const fallback = "https://www.linkedin.com/in/sainathrevankar/details/certifications/";
+  for (const [title, date] of [
+    ["Datorama Solution Architect", "2019-05"],
+    ["Datorama Champion", "2019-01"],
+    ["Partners' Level 3", "2018-12"]
+  ]) {
+    const matches = cards.filter(card => card.includes(`<h3>${title}</h3>`));
+    assert.equal(matches.length, 1, title);
+    assert.ok(matches[0].includes(`datetime="${date}"`), title);
+    assert.ok(matches[0].includes(`href="${fallback}"`), title);
+  }
+  for (const title of ["Admin Certification (Level 1)", "Datorama Expert (Level 2)"]) {
+    const matches = cards.filter(card => card.includes(`<h3>${title}</h3>`));
+    assert.equal(matches.length, 1, title);
+    assert.ok(matches[0].includes("https://s3.amazonaws.com/datorama_certification/"), title);
+  }
+  for (const title of [
+    "9A0-381: Analytics Business Practitioner Exam",
+    "Tealium iQ Tag Management - Product Certified!",
+    "MongoDB fo DBAs",
+    "MongoDB for Developers",
+    "Teradata 12 Certified Professional",
+    "Six Sigma Yellow Belt Certification"
+  ]) {
+    const card = cards.find(item => item.includes(`<h3>${title}</h3>`));
+    assert.ok(card?.includes(`href="${fallback}"`), title);
+  }
+});
+
 test("journal and project search, topic filters and pagination work with the published catalog", async () => {
   const element = properties => ({
     ...properties, addEventListener(event, listener) { this[event] = listener; },
@@ -304,16 +336,16 @@ test("journal and project search, topic filters and pagination work with the pub
   const visible = collection => collection.filter(card => !card.hidden).length;
   assert.equal(journalTotal.textContent, "50 articles in total");
   assert.equal(projectTotal.textContent, "7 projects in total");
-  assert.equal(visible(cards), 5);
-  assert.equal(journalPagination.children.length, 12);
+  assert.equal(visible(cards), 6);
+  assert.equal(journalPagination.children.length, 11);
   journalPagination.children.find(button => button.textContent === "2").click();
-  assert.equal(visible(cards), 5);
-  assert.equal(journalResults.textContent, "Showing 6–10 of 50 articles");
+  assert.equal(visible(cards), 6);
+  assert.equal(journalResults.textContent, "Showing 7–12 of 50 articles");
   filters[1].click();
-  assert.equal(visible(cards), 5);
-  assert.equal(journalResults.textContent, "Showing 1–5 of 25 articles");
+  assert.equal(visible(cards), 6);
+  assert.equal(journalResults.textContent, "Showing 1–6 of 25 articles");
   filters[2].click();
-  assert.equal(visible(cards), 5);
+  assert.equal(visible(cards), 6);
   search.value = "Classification";
   search.input();
   assert.equal(visible(cards), 1);
@@ -334,12 +366,12 @@ test("journal and project search, topic filters and pagination work with the pub
   assert.equal(journalEmpty.hidden, true);
   search.value = "";
   filters[0].click();
-  assert.equal(visible(cards), 5);
+  assert.equal(visible(cards), 6);
 
-  assert.equal(visible(projects), 5);
+  assert.equal(visible(projects), 6);
   assert.equal(projectPagination.children.length, 4);
   projectPagination.children.find(button => button.textContent === "2").click();
-  assert.equal(visible(projects), 2);
+  assert.equal(visible(projects), 1);
   projectSearch.value = "Classification Manager";
   projectSearch.input();
   assert.equal(visible(projects), 1);
