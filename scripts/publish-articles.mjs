@@ -27,18 +27,20 @@ const card = (article, prefix, featured = false) => {
   const linkText = article.linked ? "Read on LinkedIn ↗" : "Read on this website →";
   const imagePrefix = featured ? "" : "../";
   const visual = article.cover
-    ? `<div class="${featured ? "feature-visual" : "visual"} cover-visual" aria-hidden="true"><img src="${imagePrefix}assets/images/covers/${escape(article.cover)}" alt="" width="1280" height="719" loading="lazy"></div>`
+    ? `<div class="${featured ? "feature-visual" : "visual"} cover-visual${article.coverFit === "contain" ? " cover-contain" : ""}" aria-hidden="true"><img src="${imagePrefix}assets/images/covers/${escape(article.cover)}" alt="" width="1280" height="719" loading="lazy"></div>`
     : `<div class="${featured ? "feature-visual" : "visual"}" aria-hidden="true"></div>`;
   const date = article.date ? `<time datetime="${article.date}">${dateLabel(article.date)}</time>` : "Publication date unavailable";
+  const credit = article.coverCredit ? `<p class="cover-credit">Image credit: ${escape(article.coverCredit)}</p>` : "";
   return `<article class="${featured ? "feature-card" : "article-card"}"${featured ? "" : ` data-category="${escape(article.filters.join(" "))}"`}>
 ${visual}
 <div class="card-body"><div class="meta">${escape(article.category)} · ${date}</div>
 <h${featured ? 3 : 2}><a href="${link}"${externalAttributes}>${escape(article.title)}</a></h${featured ? 3 : 2}>
-<p>${escape(article.description)}</p><a class="text-link" href="${link}"${externalAttributes}>${linkText}</a></div></article>`;
+<p>${escape(article.description)}</p>${credit}<a class="text-link" href="${link}"${externalAttributes}>${linkText}</a></div></article>`;
 };
 const pageOutputs = [];
 for (const article of linkedArticles) {
   if (article.cover !== null && !/^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/.test(article.cover)) throw new Error(`Invalid cover: ${article.title}`);
+  if (article.coverFit !== undefined && article.coverFit !== "contain") throw new Error(`Invalid cover fit: ${article.title}`);
   if (article.date !== null && !/^\d{4}-\d{2}-\d{2}$/.test(article.date)) throw new Error(`Invalid date: ${article.title}`);
   if (new URL(article.source).origin !== "https://www.linkedin.com") throw new Error(`Invalid article source: ${article.title}`);
   if (article.cover !== null) await readFile(new URL(`assets/images/covers/${article.cover}`, root));

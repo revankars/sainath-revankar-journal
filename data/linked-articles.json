@@ -357,7 +357,9 @@
     "filters": ["analytics", "data"],
     "date": "2023-09-30",
     "source": "https://www.linkedin.com/pulse/adobe-analytics-data-feed-sainath-revankar/",
-    "cover": null
+    "cover": "adobe-analytics-data-feed.jpg",
+    "coverFit": "contain",
+    "coverCredit": "ipopba"
   },
   {
     "title": "Automate Lift/Confidence calculation within Adobe Analytics Workspace",
@@ -384,7 +386,9 @@
     "filters": ["aep", "personalization", "architecture"],
     "date": "2021-02-11",
     "source": "https://www.linkedin.com/pulse/next-best-action-adobes-journey-orchestration-sainath-revankar/",
-    "cover": null
+    "cover": "next-best-action.jpg",
+    "coverFit": "contain",
+    "coverCredit": "Pointillist"
   },
   {
     "title": "Adobe Target Recommendations using Apriori Algorithm",
@@ -393,25 +397,28 @@
     "filters": ["personalization", "data"],
     "date": "2020-09-19",
     "source": "https://www.linkedin.com/pulse/adobe-target-recommendations-using-apriori-algorithm-sainath-revankar/",
-    "cover": null
+    "cover": "target-apriori-recommendations.jpg",
+    "coverFit": "contain",
+    "coverCredit": "Google"
   },
   {
-    "title": "LinkedIn article: Real-time event customer engagement",
-    "description": "Publication details could not be retrieved. Open the original article on LinkedIn.",
+    "title": "Unlocking Instant Customer Engagement: Real-Time Event Activation with Snowflake and Adobe Experience Platform",
+    "description": "Explore real-time customer engagement using Snowflake, Adobe Experience Platform and Journey Optimizer.",
     "category": "Customer Engagement",
     "filters": ["aep", "personalization"],
-    "date": null,
+    "date": "2025-09-27",
     "source": "https://www.linkedin.com/pulse/unlocking-instant-customer-engagement-real-time-event-revankar-wv2mc/",
-    "cover": null
+    "cover": "snowflake-real-time-activation.jpg"
   },
   {
-    "title": "LinkedIn article: Adobe Analytics getTimeBetweenEvents plugin",
-    "description": "Publication details could not be retrieved. Open the original article on LinkedIn.",
+    "title": "Adobe Analytics Plugin On getTimeBetweenEvents",
+    "description": "Explore how the getTimeBetweenEvents plugin measures the interval between Adobe Analytics events.",
     "category": "Adobe Analytics",
     "filters": ["analytics", "data"],
-    "date": null,
+    "date": "2023-04-02",
     "source": "https://www.linkedin.com/pulse/adobe-analytics-plugin-gettimebetweenevents-sainath-revankar/",
-    "cover": null
+    "cover": "get-time-between-events.jpg",
+    "coverFit": "contain"
   },
   {
     "title": "Custom (a.k.a SAINT) Classification in Adobe Analytics",

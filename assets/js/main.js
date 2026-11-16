@@ -35,10 +35,6 @@
     revealItems.forEach(item => item.classList.add("visible"));
   }
 
-  const filters = [...document.querySelectorAll(".filter-chip[data-filter]")];
-  const cards = [...document.querySelectorAll("[data-category]")];
-  const search = document.querySelector("#article-search");
-  const emptyState = document.querySelector(".empty-note");
   const journalTotal = document.querySelector("#journal-total");
   const projectTotal = document.querySelector("#project-total");
   if (journalTotal) {
@@ -49,31 +45,103 @@
     const count = document.querySelectorAll(".project-grid .project").length;
     projectTotal.textContent = `${count} ${count === 1 ? "project" : "projects"} in total`;
   }
-  let activeFilter = "all";
+  const collectionPageSize = 5;
+  const setupCollection = ({ grid, searchInput, filters = [], emptyState, pagination, status, itemName }) => {
+    if (!grid) return;
 
-  const updateArticles = () => {
-    const query = search?.value.trim().toLocaleLowerCase() || "";
-    let visibleCount = 0;
-    cards.forEach(card => {
-      const categoryMatch = activeFilter === "all" || card.dataset.category.split(/\s+/).includes(activeFilter);
-      const textMatch = !query || card.textContent.toLocaleLowerCase().includes(query);
-      const visible = categoryMatch && textMatch;
-      card.hidden = !visible;
-      if (visible) visibleCount += 1;
-    });
-    if (emptyState) emptyState.hidden = visibleCount > 0;
+    const cards = [...grid.children].filter(card => card.matches("article"));
+    let activeFilter = "all";
+    let currentPage = 1;
+
+    const update = (resetPage = false) => {
+      const query = searchInput?.value.trim().toLocaleLowerCase() || "";
+      const matches = cards.filter(card => {
+        const categories = card.dataset.category?.split(/\s+/) || [];
+        const categoryMatch = activeFilter === "all" || categories.includes(activeFilter);
+        const textMatch = !query || card.textContent.toLocaleLowerCase().includes(query);
+        return categoryMatch && textMatch;
+      });
+      const pageCount = Math.ceil(matches.length / collectionPageSize);
+      currentPage = resetPage ? 1 : Math.max(1, Math.min(currentPage, pageCount || 1));
+      const startIndex = (currentPage - 1) * collectionPageSize;
+      const visibleCards = new Set(matches.slice(startIndex, startIndex + collectionPageSize));
+
+      cards.forEach(card => {
+        card.hidden = !visibleCards.has(card);
+      });
+      if (emptyState) emptyState.hidden = matches.length > 0;
+      if (status) {
+        status.textContent = matches.length
+          ? `Showing ${startIndex + 1}–${Math.min(startIndex + collectionPageSize, matches.length)} of ${matches.length} ${itemName}${matches.length === 1 ? "" : "s"}`
+          : "";
+      }
+
+      if (!pagination) return;
+      pagination.replaceChildren();
+      pagination.hidden = pageCount <= 1;
+      if (pageCount <= 1) return;
+
+      const addPageButton = (label, page, { disabled = false, current = false, ariaLabel = label } = {}) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "page-button";
+        button.textContent = label;
+        button.disabled = disabled;
+        button.setAttribute("aria-label", ariaLabel);
+        if (current) button.setAttribute("aria-current", "page");
+        button.addEventListener("click", () => {
+          currentPage = page;
+          update();
+        });
+        pagination.append(button);
+      };
+
+      addPageButton("Previous", currentPage - 1, {
+        disabled: currentPage === 1,
+        ariaLabel: "Previous page"
+      });
+      for (let page = 1; page <= pageCount; page += 1) {
+        addPageButton(String(page), page, {
+          current: page === currentPage,
+          ariaLabel: `Page ${page}${page === currentPage ? ", current page" : ""}`
+        });
+      }
+      addPageButton("Next", currentPage + 1, {
+        disabled: currentPage === pageCount,
+        ariaLabel: "Next page"
+      });
+    };
+
+    filters.forEach(button => button.addEventListener("click", () => {
+      activeFilter = button.dataset.filter;
+      filters.forEach(filter => {
+        const selected = filter === button;
+        filter.classList.toggle("active", selected);
+        filter.setAttribute("aria-pressed", String(selected));
+      });
+      update(true);
+    }));
+    searchInput?.addEventListener("input", () => update(true));
+    update(true);
   };
 
-  filters.forEach(button => button.addEventListener("click", () => {
-    activeFilter = button.dataset.filter;
-    filters.forEach(filter => {
-      const selected = filter === button;
-      filter.classList.toggle("active", selected);
-      filter.setAttribute("aria-pressed", String(selected));
-    });
-    updateArticles();
-  }));
-  search?.addEventListener("input", updateArticles);
+  setupCollection({
+    grid: document.querySelector(".journal-grid"),
+    searchInput: document.querySelector("#article-search"),
+    filters: [...document.querySelectorAll(".filter-chip[data-filter]")],
+    emptyState: document.querySelector("#journal-empty"),
+    pagination: document.querySelector("#journal-pagination"),
+    status: document.querySelector("#journal-results"),
+    itemName: "article"
+  });
+  setupCollection({
+    grid: document.querySelector(".project-grid"),
+    searchInput: document.querySelector("#project-search"),
+    emptyState: document.querySelector("#project-empty"),
+    pagination: document.querySelector("#project-pagination"),
+    status: document.querySelector("#project-results"),
+    itemName: "project"
+  });
 
   const year = document.querySelector("#year");
   if (year) year.textContent = String(new Date().getFullYear());

@@ -19,17 +19,18 @@ All local links and assets are relative, including nested article pages, so the 
 ## Personalize the site
 
 - **Site URL and contact links:** Update `siteUrl`, `linkedinUrl`, `githubUrl`, `mediumUrl` and `email` in `assets/js/site-config.js`. Keep an empty string for links you do not want shown.
-- **About and profile:** Edit `about.html`. The supplied profile photo is in `assets/images/sainath-revankar.jpg`; replace it only with an approved photo. Keep profile and career details accurate.
+- **About and profile:** Edit `about.html` for the biography, education and personal highlights. The supplied profile photo is in `assets/images/sainath-revankar.jpg`; replace it only with an approved photo. Keep profile, education and career details accurate.
 - **Projects:** Edit the project cards in `projects.html` and update its displayed total as a fallback for visitors without JavaScript. Matching article covers are stored in `assets/images/covers/`; include a repository, demo or image only when it is available and verified.
 - **Certifications:** The cards combine the public LinkedIn profile with owner-supplied credential details. Keep names, issuers, issue/expiry dates, IDs and verification links aligned with current records. Mark expired credentials clearly and update an existing credential rather than duplicating it.
 - **Articles:** Maintain onsite articles in `data/articles.json` and their trusted HTML bodies in `data/articles/`. Maintain LinkedIn-only entries in `data/linked-articles.json`. Run the optional maintenance command below to regenerate static pages, journal cards, the journal total, home features and sitemap. LinkedIn entries without a date or approved cover use `null` for that field and display an unavailable date or placeholder artwork.
 - **Article details:** Keep the title, description, category, filters, original publication date, source URL and local cover filename in the catalog. Generated pages include static metadata and structured data; the shared script preserves publication dates when updating the configured canonical URL.
+- **LinkedIn covers:** Set `coverFit` to `contain` when an image needs to be shown without cropping, and record applicable attribution in `coverCredit`. Only use covers approved for this website.
 - **Images:** Add optimized images to `assets/images/`, use descriptive `alt` text, explicit width and height, and `loading="lazy"` for non-critical images.
 - **Design:** `assets/css/style.css` contains the base design system; `assets/css/components.css` contains page components, accessibility and responsive overrides.
 
 ## Journal behavior
 
-Onsite articles each have an independent static page; LinkedIn-only entries open their original publications. The journal index provides client-side topic filters and text search. Onsite article pages include estimated reading time, a scroll progress indicator, sharing/copy-link controls, related navigation and a reading layout. No journal content is fetched from a database or API.
+Onsite articles each have an independent static page; LinkedIn-only entries open their original publications. The journal index provides client-side topic filters, text search and pagination with five articles per page. The projects page provides text search and pagination with five projects per page. Onsite article pages include estimated reading time, a scroll progress indicator, sharing/copy-link controls, related navigation and a reading layout. No journal content is fetched from a database or API.
 
 The home page features the two newest dated journal entries across both catalogs. Entries without a known publication date remain in the journal but are not featured on the home page.
 

@@ -39,7 +39,7 @@ test("publishing is repeatable and retains the complete article bodies and dates
 
 test("published navigation, table of contents and assets resolve at a project prefix", async () => {
   const prefix = "/example-project/";
-  for (const path of ["index.html", "journal/index.html", "projects.html", "certifications.html", ...articlePaths]) {
+  for (const path of ["index.html", "about.html", "journal/index.html", "projects.html", "certifications.html", ...articlePaths]) {
     const html = await read(path);
     const base = new URL(`${prefix}${path}`, "https://example.test");
     for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
@@ -167,6 +167,35 @@ test("linked articles appear in chronological order with their covers and origin
   }
 });
 
+test("previously unavailable article details and covers appear in the journal", async () => {
+  const journal = await read("journal/index.html");
+  const cards = journal.match(/<article class="article-card"[\s\S]*?<\/article>/g);
+  for (const [slug, date, cover] of [
+    ["unlocking-instant-customer-engagement-real-time-event-revankar-wv2mc", "2025-09-27", "snowflake-real-time-activation.jpg"],
+    ["adobe-analytics-plugin-gettimebetweenevents-sainath-revankar", "2023-04-02", "get-time-between-events.jpg"]
+  ]) {
+    const card = cards.find(item => item.includes(slug));
+    assert.ok(card?.includes(`datetime="${date}"`), slug);
+    assert.ok(card.includes(`src="../assets/images/covers/${cover}"`), slug);
+    assert.ok(!card.includes("Publication details could not be retrieved"), slug);
+  }
+});
+
+test("approved credited covers display without cropping", async () => {
+  const journal = await read("journal/index.html");
+  const cards = journal.match(/<article class="article-card"[\s\S]*?<\/article>/g);
+  for (const [slug, cover, credit] of [
+    ["adobe-analytics-data-feed-sainath-revankar", "adobe-analytics-data-feed.jpg", "ipopba"],
+    ["next-best-action-adobes-journey-orchestration-sainath-revankar", "next-best-action.jpg", "Pointillist"],
+    ["adobe-target-recommendations-using-apriori-algorithm-sainath-revankar", "target-apriori-recommendations.jpg", "Google"]
+  ]) {
+    const card = cards.find(item => item.includes(slug));
+    assert.ok(card?.includes(`src="../assets/images/covers/${cover}"`), slug);
+    assert.ok(card.includes("cover-visual cover-contain"), slug);
+    assert.ok(card.includes(`Image credit: ${credit}`), slug);
+  }
+});
+
 test("projects show matching covers and the Marketo project links", async () => {
   const html = await read("projects.html");
   const count = (html.match(/<article class="project"/g) || []).length;
@@ -209,26 +238,52 @@ test("contact page configures the Medium profile link", async () => {
   assert.equal(mediumLink.rel, "noopener noreferrer");
 });
 
-test("combined search and topic filters work with the published catalog", async () => {
+test("journal and project search, topic filters and pagination work with the published catalog", async () => {
   const element = properties => ({
     ...properties, addEventListener(event, listener) { this[event] = listener; },
-    classList: { toggle() {} }, setAttribute() {}
+    classList: { toggle() {} }, setAttribute(name, value) { this[name] = value; },
+    matches(selector) { return selector === "article"; }
   });
   const search = element({ value: "" });
-  const empty = { hidden: true };
+  const projectSearch = element({ value: "" });
+  const journalEmpty = { hidden: true };
+  const projectEmpty = { hidden: true };
   const journalTotal = {};
   const projectTotal = {};
+  const journalResults = {};
+  const projectResults = {};
   const filters = ["all", "analytics", "architecture", "data", "aep"].map(filter =>
     element({ dataset: { filter } }));
-  const cards = [...articles, ...linkedArticles].map(article => ({
+  const cards = [...articles, ...linkedArticles].map(article => element({
     dataset: { category: article.filters.join(" ") },
     textContent: `${article.title} ${article.description}`, hidden: false
   }));
+  const projects = [
+    "Adobe Analytics Classification Manager", "Marketo Lead Uploader", "Tags Audit",
+    "CJA Intelligence", "Direct Data Insertion", "Bulk Data Insertion", "Adobe Analytics Audit Tool"
+  ].map(title => element({ dataset: {}, textContent: title, hidden: false }));
+  const createPagination = () => ({
+    hidden: true, children: [],
+    replaceChildren() { this.children = []; },
+    append(button) { this.children.push(button); }
+  });
+  const journalPagination = createPagination();
+  const projectPagination = createPagination();
+  const journalGrid = { children: cards };
+  const projectGrid = { children: projects };
   const document = {
     title: "Journal",
     querySelector(selector) {
       if (selector === "#article-search") return search;
-      if (selector === ".empty-note") return empty;
+      if (selector === "#project-search") return projectSearch;
+      if (selector === ".journal-grid") return journalGrid;
+      if (selector === ".project-grid") return projectGrid;
+      if (selector === "#journal-empty") return journalEmpty;
+      if (selector === "#project-empty") return projectEmpty;
+      if (selector === "#journal-pagination") return journalPagination;
+      if (selector === "#project-pagination") return projectPagination;
+      if (selector === "#journal-results") return journalResults;
+      if (selector === "#project-results") return projectResults;
       if (selector === "#journal-total") return journalTotal;
       if (selector === "#project-total") return projectTotal;
       if (selector === 'link[rel="canonical"]') return {};
@@ -236,42 +291,61 @@ test("combined search and topic filters work with the published catalog", async 
     },
     querySelectorAll(selector) {
       if (selector === ".filter-chip[data-filter]") return filters;
-      if (selector === "[data-category]") return cards;
       if (selector === ".journal-grid .article-card") return cards;
-      if (selector === ".project-grid .project") return [{}];
+      if (selector === ".project-grid .project") return projects;
       return [];
     },
-    createElement() { return {}; },
+    createElement() { return element({}); },
     head: { append() {} }
   };
   vm.runInNewContext(await read("assets/js/main.js"), {
     document, URL, window: { location: { href: "https://example.test/journal/" }, matchMedia: () => ({ matches: false }) }
   });
-  const visible = () => cards.filter(card => !card.hidden).length;
+  const visible = collection => collection.filter(card => !card.hidden).length;
   assert.equal(journalTotal.textContent, "50 articles in total");
-  assert.equal(projectTotal.textContent, "1 project in total");
+  assert.equal(projectTotal.textContent, "7 projects in total");
+  assert.equal(visible(cards), 5);
+  assert.equal(journalPagination.children.length, 12);
+  journalPagination.children.find(button => button.textContent === "2").click();
+  assert.equal(visible(cards), 5);
+  assert.equal(journalResults.textContent, "Showing 6–10 of 50 articles");
   filters[1].click();
-  assert.equal(visible(), 25);
+  assert.equal(visible(cards), 5);
+  assert.equal(journalResults.textContent, "Showing 1–5 of 25 articles");
   filters[2].click();
-  assert.equal(visible(), 32);
+  assert.equal(visible(cards), 5);
   search.value = "Classification";
   search.input();
-  assert.equal(visible(), 1);
+  assert.equal(visible(cards), 1);
   filters[3].click();
-  assert.equal(visible(), 1);
-  assert.equal(empty.hidden, true);
+  assert.equal(visible(cards), 1);
+  assert.equal(journalEmpty.hidden, true);
   search.value = "   MeRcHaNdIsInG ";
   search.input();
-  assert.equal(visible(), 1);
-  assert.equal(empty.hidden, true);
+  assert.equal(visible(cards), 1);
+  assert.equal(journalEmpty.hidden, true);
   filters[4].click();
-  assert.equal(visible(), 0);
+  assert.equal(visible(cards), 0);
+  assert.equal(journalEmpty.hidden, false);
   assert.equal(journalTotal.textContent, "50 articles in total");
   search.value = "Identity, Edge, and Personalization";
   search.input();
-  assert.equal(visible(), 1);
-  assert.equal(empty.hidden, true);
+  assert.equal(visible(cards), 1);
+  assert.equal(journalEmpty.hidden, true);
   search.value = "";
   filters[0].click();
-  assert.equal(visible(), 50);
+  assert.equal(visible(cards), 5);
+
+  assert.equal(visible(projects), 5);
+  assert.equal(projectPagination.children.length, 4);
+  projectPagination.children.find(button => button.textContent === "2").click();
+  assert.equal(visible(projects), 2);
+  projectSearch.value = "Classification Manager";
+  projectSearch.input();
+  assert.equal(visible(projects), 1);
+  assert.equal(projectPagination.hidden, true);
+  projectSearch.value = "no matching project";
+  projectSearch.input();
+  assert.equal(visible(projects), 0);
+  assert.equal(projectEmpty.hidden, false);
 });

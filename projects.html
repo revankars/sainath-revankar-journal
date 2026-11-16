@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore Sainath Revankar’s Marketo Lead Uploader, Adobe audit tools and data ingestion projects for analytics and experience platforms.">
-  <meta name="theme-color" content="#f4f1e7"><meta property="og:type" content="website"><meta property="og:title" content="Projects | The Sainath Revankar Journal"><meta property="og:description" content="Practical tools for Adobe Tags audits, CJA governance, bulk ingestion and direct Analytics data collection, with applications and project write-ups."><meta property="og:url" content=""><meta name="twitter:card" content="summary">
+  <meta name="description" content="Explore Sainath Revankar’s Adobe Analytics Classification Manager, Marketo Lead Uploader, audit tools and data ingestion projects.">
+  <meta name="theme-color" content="#f4f1e7"><meta property="og:type" content="website"><meta property="og:title" content="Projects | The Sainath Revankar Journal"><meta property="og:description" content="Practical tools for Adobe Analytics classification migration, Tags audits, CJA governance, bulk ingestion and direct data collection."><meta property="og:url" content=""><meta name="twitter:card" content="summary">
   <title>Projects | The Sainath Revankar Journal</title><link rel="canonical" href="https://revankars.github.io/sainath-revankar-journal/projects.html"><link rel="stylesheet" href="assets/css/style.css"><link rel="stylesheet" href="assets/css/components.css"><script type="application/ld+json" id="site-structured-data"></script>
 </head>
 <body>
@@ -11,7 +11,18 @@
 <header class="site-header"><div class="container nav"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">SR</span><span>The Sainath Revankar Journal</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">Menu</button><nav class="nav-links" id="primary-navigation" aria-label="Main navigation"><a href="index.html">Home</a><a href="journal/index.html">Journal</a><a href="about.html">About</a><a href="certifications.html">Credentials</a><a class="active" aria-current="page" href="projects.html">Projects</a><a href="contact.html">Contact</a></nav></div></header>
 <main id="main">
   <section class="page-heading"><div class="container"><div class="eyebrow">SELECTED WORK & TECHNICAL CONTRIBUTIONS</div><h1>Useful ideas are worth building.</h1><p>Tools I build to make complex analytics environments easier to understand, govern and connect. Explore the applications and the thinking behind them.</p></div></section>
-  <section class="section section-white"><div class="container"><p class="collection-count" id="project-total">6 projects in total</p><div class="project-grid">
+  <section class="section section-white"><div class="container"><p class="collection-count" id="project-total">7 projects in total</p>
+    <div class="journal-controls"><label for="project-search">Search projects</label><input id="project-search" type="search" placeholder="Search title, technology or summary" autocomplete="off"></div>
+    <p class="collection-status" id="project-results" aria-live="polite"></p>
+    <div class="project-grid">
+    <article class="project" id="classification-manager">
+      <div class="project-top cover-visual" aria-hidden="true"><img src="assets/images/covers/saint-classification.jpg" alt="" width="1280" height="719" loading="lazy"></div><div class="meta">Adobe Analytics · Classification migration</div>
+      <h2>Adobe Analytics Classification Manager</h2>
+      <p><strong>Objective:</strong> Help teams recover historical classification mappings and manage controlled imports while transitioning from legacy SAINT workflows to Classification Sets.</p>
+      <p><strong>Solution:</strong> Discover report suites and classification datasets, retrieve official templates, validate CSV, TSV and JSON files, submit imports with explicit commit confirmation, and monitor job history and processing status.</p>
+      <p><strong>Technology:</strong> Adobe Analytics Discovery and Classifications APIs with Server-to-Server OAuth authentication.</p>
+      <div class="project-links"><a class="text-link" href="https://adobe-analytics-classification-manager.onrender.com/" target="_blank" rel="noopener noreferrer">Open Classification Manager ↗</a><a class="text-link" href="https://www.linkedin.com/pulse/saint-era-over-classification-challenge-isnt-building-revankar-f5pmc/" target="_blank" rel="noopener noreferrer">Read the project story ↗</a></div>
+    </article>
     <article class="project" id="marketo-lead-uploader">
       <div class="project-top cover-visual" aria-hidden="true"><img src="assets/images/covers/marketo-lead-uploader.jpg" alt="" width="1280" height="719" loading="lazy"></div><div class="meta">Marketo · Campaign attribution</div>
       <h2>Marketo Lead Uploader</h2>
@@ -53,7 +64,10 @@
       <div class="project-links"><a class="text-link" href="https://bulk-insertion-api.onrender.com/" target="_blank" rel="noopener noreferrer">Open Bulk Insertion API ↗</a><a class="text-link" href="https://www.linkedin.com/pulse/moving-millions-analytics-events-building-reliable-adobe-revankar-s8anc/" target="_blank" rel="noopener noreferrer">Read the project story ↗</a></div>
     </article>
     <article class="project"><div class="project-top cover-visual" aria-hidden="true"><img src="assets/images/covers/analytics-audit.jpg" alt="" width="1280" height="719" loading="lazy"></div><div class="meta">Adobe Analytics · Audit</div><h2>Adobe Analytics Audit Tool</h2><p><strong>Objective:</strong> Support a structured review of Adobe Analytics implementations.</p><p><strong>Solution:</strong> An open-source audit tool. See the repository for implementation details, capabilities and usage.</p><p><strong>Technology:</strong> See the repository README for the current stack and setup instructions.</p><a class="text-link" href="https://github.com/revankars/analytics-audit-tool" target="_blank" rel="noopener noreferrer">View GitHub repository ↗</a></article>
-  </div></div></section>
+    </div>
+    <nav class="pagination" id="project-pagination" aria-label="Project pages" hidden></nav>
+    <p class="empty-note" id="project-empty" role="status" hidden>No projects match your search. Try a different query.</p>
+  </div></section>
   <section class="section"><div class="container contact-panel"><div><div class="eyebrow">HAVE A QUESTION OR IDEA?</div><h2>Let’s talk about<br>what you’re building.</h2><p>Explore the project write-ups and available repositories, or get in touch about a use case.</p></div><a class="button" href="contact.html">Contact ↗</a></div></section>
 </main>
 <footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">The Sainath Revankar Journal</div><div class="footer-note">Ideas, insights and experiences worth sharing.</div></div><div class="footer-links"><a href="journal/index.html">Journal</a><a href="about.html">About</a><a href="contact.html">Contact</a></div><div class="footer-note">© <span id="year">2026</span> Sainath Revankar</div></div></footer><button class="back-to-top" type="button" aria-label="Back to top" hidden>↑</button>
