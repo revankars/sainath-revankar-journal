@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "understanding-merchandising-evars",
+    "cover": "merchandising-evars.jpg",
+    "title": "Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding & Allocation — From Adobe Analytics to CJA",
+    "description": "Product-level binding, allocation and attribution explained, from Adobe Analytics merchandising eVars to CJA Binding Dimensions and Metrics.",
+    "category": "Adobe Analytics & CJA",
+    "filters": ["analytics", "data"],
+    "date": "2026-11-12",
+    "source": "https://www.linkedin.com/pulse/understanding-merchandising-evars-product-syntax-binding-revankar-kag7c"
+  },
+  {
+    "slug": "classification-rule-builder-retirement",
+    "cover": "classification-rules.jpg",
+    "title": "Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here's How to Prepare",
+    "description": "What changes with Classification Sets Rules, how to migrate existing logic, and what to test before activating your rules.",
+    "category": "Adobe Analytics",
+    "filters": ["analytics", "architecture"],
+    "date": "2026-11-11",
+    "source": "https://www.linkedin.com/pulse/adobe-analytics-legacy-classification-rule-builder-heres-revankar-hcvxf"
+  },
+  {
+    "slug": "introducing-cja-intelligence",
+    "cover": "cja-intelligence.jpg",
+    "title": "Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence",
+    "description": "A connected view of CJA inventory, component health, data views, reports, projects and governance workflows.",
+    "category": "Customer Journey Analytics",
+    "filters": ["analytics", "architecture"],
+    "date": "2026-11-06",
+    "source": "https://www.linkedin.com/pulse/seeing-your-customer-journey-analytics-setup-clearly-cja-revankar-g3sbc"
+  }
+]

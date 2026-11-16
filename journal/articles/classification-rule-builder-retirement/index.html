@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare | The Sainath Revankar Journal</title>
+<meta name="description" content="What changes with Classification Sets Rules, how to migrate existing logic, and what to test before activating your rules."><meta name="theme-color" content="#f4f1e7">
+<link rel="canonical" href="https://revankars.github.io/sainath-revankar-journal/journal/articles/classification-rule-builder-retirement/"><meta property="og:url" content="https://revankars.github.io/sainath-revankar-journal/journal/articles/classification-rule-builder-retirement/">
+<meta property="og:type" content="article"><meta property="og:title" content="Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare">
+<meta property="og:description" content="What changes with Classification Sets Rules, how to migrate existing logic, and what to test before activating your rules."><meta property="article:published_time" content="2026-11-11">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare"><meta name="twitter:description" content="What changes with Classification Sets Rules, how to migrate existing logic, and what to test before activating your rules.">
+<link rel="stylesheet" href="../../../assets/css/style.css"><link rel="stylesheet" href="../../../assets/css/components.css">
+<script type="application/ld+json" id="site-structured-data">{"@context":"https://schema.org","@type":"Article","headline":"Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here's How to Prepare","description":"What changes with Classification Sets Rules, how to migrate existing logic, and what to test before activating your rules.","author":{"@type":"Person","name":"Sainath Revankar"},"datePublished":"2026-11-11","mainEntityOfPage":"https://revankars.github.io/sainath-revankar-journal/journal/articles/classification-rule-builder-retirement/","isBasedOn":"https://www.linkedin.com/pulse/adobe-analytics-legacy-classification-rule-builder-heres-revankar-hcvxf"}</script>
+</head><body>
+<div class="reading-progress" aria-hidden="true"></div><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav"><a class="brand" href="../../../index.html"><span class="brand-mark" aria-hidden="true">SR</span><span>The Sainath Revankar Journal</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">Menu</button><nav class="nav-links" id="primary-navigation" aria-label="Main navigation"><a href="../../../index.html">Home</a><a class="active" aria-current="page" href="../../index.html">Journal</a><a href="../../../about.html">About</a><a href="../../../certifications.html">Credentials</a><a href="../../../projects.html">Projects</a><a href="../../../contact.html">Contact</a></nav></div></header>
+<main id="main">
+<section class="page-heading article-heading"><div class="container">
+<a class="text-link" href="../../index.html">← Back to the journal</a><div class="eyebrow">Adobe Analytics</div>
+<h1>Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare</h1><p>What changes with Classification Sets Rules, how to migrate existing logic, and what to test before activating your rules.</p>
+<div class="article-byline">By Sainath Revankar · <time datetime="2026-11-11">November 11, 2026</time> · <span data-reading-time>7 min read</span></div>
+<p class="editorial-note">Originally published on <a class="text-link" href="https://www.linkedin.com/pulse/adobe-analytics-legacy-classification-rule-builder-heres-revankar-hcvxf" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>. Read the article here, with illustrations hosted locally.</p>
+</div></section>
+<section class="section section-white"><div class="container article-layout"><div>
+<article class="article-content"><p>If your organization uses Adobe Analytics, mark February 28, 2027 on your calendar. That is when Adobe plans to retire the legacy Classification Rule Builder and move classification rule management to the new Classification Sets Rules experience.</p>
+<p>At first glance, this may look like a routine interface update. But classifications often power the reports, dashboards, segments, and data feeds that business teams rely on every day. If your organization depends on automated classifications, now is a good time to understand what is changing, review your existing rules, and plan your migration.</p>
+<h2 id="section-1">What are classification rules?</h2>
+<p>Classification rules automatically organize raw tracking values into meaningful reporting categories. Instead of manually uploading classification files whenever new values appear, you define rules that process incoming values as they arrive.</p>
+<p>Consider this campaign tracking code:</p><pre><code>spring:email:promo</code></pre>
+<p>A classification rule can split this value into three attributes:</p>
+<ul><li>Season: Spring</li><li>Channel: Email</li><li>Offer Type: Promo</li></ul>
+<p>This makes campaign reporting easier to understand and maintain. Classification rules are especially useful for dimensions whose values change frequently, such as internal campaign codes, marketing tracking codes, product SKUs, content identifiers, and other structured tracking values.</p>
+<h2 id="section-2">What's changing?</h2>
+<p>Adobe is moving classification rule management into the newer Classification Sets experience. The rules now live inside the classification set itself, so you no longer manage them separately.</p>
+<p>The difference comes down to how the rules are organized:</p>
+<ul><li><strong>Before (legacy Classification Rule Builder):</strong> You created rule sets separately, then associated each one with one or more report suites.</li><li><strong>Now (Classification Sets Rules):</strong> You create and manage rules directly within a classification set. Once activated, the rules apply to the report suites and dimensions subscribed to that set.</li></ul>
+<p>In short, rule management and classification configuration are now handled in one place. To find it, navigate to Components → Classification Sets.</p>
+<figure><img src="../../../assets/images/articles/classification-components-menu.png" alt="Classification sets are under the Components menu." width="684" height="862" loading="lazy"><figcaption>Classification sets are under the Components menu.</figcaption></figure>
+<h2 id="section-3">One technical difference to understand</h2>
+<p>Pay close attention to how sub-classifications work in the new rule builder. In the new experience, a sub-classification uses the value of its parent classification, not the original raw value.</p>
+<p>If your existing logic relies on the original raw value at multiple classification levels, your output may change after migration.</p>
+<p>My recommendation: Don't assume that migrating your rules guarantees identical output. Test migrated rules with representative values, particularly where parent and sub-classification dependencies exist.</p>
+<h2 id="section-4">The good news: you can reclassify recent historical data</h2>
+<p>The new experience includes a lookback feature. After you activate your rules, you can apply them retroactively to historical data within a lookback period of 1 to 6 months. If you don't activate right away, you may still be able to classify recent data without starting over.</p>
+<p>Data older than the supported lookback window cannot be reclassified through this feature, so don't wait until the deadline. Migrating early gives your team time to:</p>
+<ul><li>Validate existing classification logic</li><li>Identify reporting dependencies</li><li>Reduce the risk of unexpected changes to dashboards and reports</li><li>Resolve issues before the legacy experience is retired</li></ul>
+<h2 id="section-5">What you'll see when you switch</h2>
+<p>Open your classification set and select the Rules tab. The first time you access the new rule builder, Adobe displays a welcome screen with three options.</p>
+<figure><img src="../../../assets/images/articles/classification-welcome.png" alt="The welcome screen appears the first time you open the Rules tab in a classification set." width="744" height="325" loading="lazy"><figcaption>The welcome screen appears the first time you open the Rules tab in a classification set.</figcaption></figure>
+<h3>1. Migrate existing rules</h3>
+<p>This option imports your existing legacy rules and converts them to the new format. It is the most straightforward path for organizations that want to keep their current classification logic while moving to the new experience.</p>
+<p><strong>Best for:</strong> Teams that want to transition existing rules with minimal redesign.</p>
+<p>Before you confirm, note that migration is permanent. Adobe's confirmation dialog states that the legacy rule interface will be disabled for this classification set, that all existing rules will be converted, and that the action cannot be undone.</p>
+<figure><img src="../../../assets/images/articles/classification-migration-confirmation.png" alt="The migration confirmation dialog. Read it carefully before you proceed." width="1148" height="860" loading="lazy"><figcaption>The migration confirmation dialog. Read it carefully before you proceed.</figcaption></figure>
+<h3>2. Start fresh</h3>
+<p>This option lets you build classification rules from scratch. It is a good opportunity to revisit older rules, simplify complicated conditions, remove redundant logic, and redesign your classification strategy.</p>
+<p><strong>Best for:</strong> Teams looking to clean up or restructure their classification logic.</p>
+<blockquote>Important: Confirming this option discards your existing rules. Document or export your current configuration before you proceed.</blockquote>
+<h3>3. Continue using the legacy interface</h3>
+<p>If you aren't ready to migrate, you can keep working in the legacy interface for now. This gives your team time to assess dependencies and prepare, but it shouldn't become a reason to postpone indefinitely. Remember that the legacy experience is scheduled for retirement on February 28, 2027.</p>
+<p><strong>Best for:</strong> Teams that need more time to assess dependencies before migrating.</p>
+<p>After you migrate or create rules, the welcome screen disappears and the Rules tab opens directly in the new rule builder.</p>
+<h2 id="section-6">Working with the new Classification Sets rule builder</h2>
+<p>Once you're in the new experience, the workflow is straightforward.</p>
+<figure><img src="../../../assets/images/articles/classification-rule-builder.png" alt="The new rule builder, with functions on the left and overwrite settings, lookback and test options on the right." width="744" height="328" loading="lazy"><figcaption>The new rule builder, with functions on the left and overwrite settings, lookback and test options on the right.</figcaption></figure>
+<h3>Step 1: Build your rules</h3>
+<p>Use the drag-and-drop builder to add functions such as Starts With, Ends With, Contains, Matches, Regular Expression, and Split. Each rule sets a classification value, and you can use capture groups such as $1 to pass parts of the matched value into it.</p>
+<p>Rules run sequentially from top to bottom, so pay close attention to order and dependencies.</p>
+<figure><img src="../../../assets/images/articles/classification-regex-example.png" alt="A regular expression rule with four operations. The Test options panel holds the sample key." width="744" height="308" loading="lazy"><figcaption>A regular expression rule with four operations. The Test options panel holds the sample key.</figcaption></figure>
+<p>Here is a regular expression in action. The pattern <code>^(.+)\~(.+)\~(.+)\~(.+)$</code> matches a key made of four tilde-separated parts. Each capture group feeds one classification: $1 goes to Stock Status, $2 to Image Count, $3 to Price, and $4 to Product Age. The Test options panel on the right holds the sample key you want to check.</p>
+<h3>Step 2: Choose how values are overwritten</h3>
+<p>The right-hand panel includes an Overwrite Values setting. Choose Overwrite any existing values to replace current classifications, or Overwrite only unset values to leave existing classifications alone. Make this choice deliberately, because it determines whether your new rules change values that are already in reports.</p>
+<h3>Step 3: Test your rules</h3>
+<p>Before you activate anything, use the Test options section to enter representative sample values, then select Test rule set to validate the output. Testing matters most when you use regular expressions, multiple conditions, or parent and sub-classification relationships.</p>
+<p>In this example, each part of the key landed in the expected classification: Discontinued, 120, 26194.99, and 1204 days. If a column is blank or shows an unexpected value, revise the rule and test again before you activate it.</p>
+<figure><img src="../../../assets/images/articles/classification-test-results.png" alt="Test results for Discontinued~120~26194.99~1204 days. Each column shows the value the rule produced." width="744" height="149" loading="lazy"><figcaption>Test results for Discontinued~120~26194.99~1204 days. Each column shows the value the rule produced.</figcaption></figure>
+<h3>Step 4: Activate and validate</h3>
+<p>When the results look right, activate the rule set and confirm that the expected classifications are being populated in your report suites.</p>
+<h3>Step 5: Perform a historical lookback</h3>
+<p>If you need to apply the rules to historical data, select a lookback period of 1 to 6 months and choose Perform lookback. This brings recent reporting in line with your new classification logic.</p>
+<h2 id="section-7">A practical migration checklist</h2>
+<p>Before you migrate, review these areas with your team:</p>
+<ul>
+<li><strong>Inventory existing rules:</strong> Which report suites, dimensions, and variables depend on legacy classification rules?</li>
+<li><strong>Identify reporting dependencies:</strong> Which Workspace projects, dashboards, segments, and data feeds rely on these classifications?</li>
+<li><strong>Review existing logic:</strong> Should you migrate rules as they are, or clean up outdated conditions first?</li>
+<li><strong>Validate sub-classifications:</strong> Do any rules depend on the original raw value at multiple classification levels?</li>
+<li><strong>Test representative values:</strong> Do the migrated rules produce the expected outputs?</li>
+<li><strong>Review subscriptions:</strong> Are the right report suites and dimensions subscribed to the classification set?</li>
+<li><strong>Plan historical processing:</strong> Do you need the 1-to-6-month lookback?</li>
+<li><strong>Validate downstream reporting:</strong> Do Workspace reports, dashboards, and data feeds still produce the expected results?</li>
+</ul>
+<h2 id="section-8">The bottom line</h2>
+<p>Retiring the legacy Classification Rule Builder is more than an interface change. It is an opportunity to review how your organization manages classification logic and keeps reporting consistent.</p>
+<p>Review → Migrate → Test → Activate → Validate</p>
+<p>Don't wait until February 2027 to discover that a critical dashboard depends on a rule that didn't migrate correctly. Start reviewing your configuration now, involve the teams responsible for reporting and analytics governance, and give yourself enough time to validate the transition.</p>
+<p>Additional reading: <a href="https://experienceleague.adobe.com/en/docs/analytics/components/classifications/legacy-classifications/classifications-rulebuilder/classification-rule-builder" target="_blank" rel="noopener noreferrer">Adobe Experience League: Classification Rule Builder</a></p>
+<p>Have you started preparing for the new Classification Sets Rules experience? Are you planning to migrate your existing rules or use this opportunity to redesign them? Share your experience in the comments on the original LinkedIn article.</p>
+<p>#AdobeAnalytics #DigitalAnalytics #MarketingAnalytics #DataGovernance #MarTech #AdobeExperienceCloud</p>
+</article>
+<div class="article-sharing"><button class="button" type="button" data-share>Share article</button><button class="button button-outline" type="button" data-copy-url>Copy article URL</button><a class="text-link" data-social-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frevankars.github.io%2Fsainath-revankar-journal%2Fjournal%2Farticles%2Fclassification-rule-builder-retirement%2F">Share on LinkedIn ↗</a><a class="text-link" data-social-share="x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frevankars.github.io%2Fsainath-revankar-journal%2Fjournal%2Farticles%2Fclassification-rule-builder-retirement%2F">Share on X ↗</a><span class="share-status" role="status" aria-live="polite"></span></div>
+<nav class="article-pagination" aria-label="Article navigation"><a href="../understanding-merchandising-evars/index.html"><span>Previous article</span><strong>Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA</strong></a><a href="../introducing-cja-intelligence/index.html"><span>Next article</span><strong>Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence</strong></a></nav>
+<section class="related-articles" aria-labelledby="related-heading"><h2 id="related-heading">Related articles</h2><p><a class="text-link" href="../understanding-merchandising-evars/index.html">Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA →</a></p>
+<p><a class="text-link" href="../introducing-cja-intelligence/index.html">Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence →</a></p></section>
+</div><aside class="article-aside"><strong>In this article</strong><a href="#section-1">What are classification rules?</a>
+<a href="#section-2">What's changing?</a>
+<a href="#section-3">One technical difference to understand</a>
+<a href="#section-4">The good news: you can reclassify recent historical data</a>
+<a href="#section-5">What you'll see when you switch</a>
+<a href="#section-6">Working with the new Classification Sets rule builder</a>
+<a href="#section-7">A practical migration checklist</a>
+<a href="#section-8">The bottom line</a></aside></div></section>
+</main><footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">The Sainath Revankar Journal</div><div class="footer-note">Ideas, insights and experiences worth sharing.</div></div><div class="footer-links"><a href="../../index.html">Journal</a><a href="../../../about.html">About</a><a href="../../../projects.html">Projects</a><a href="../../../contact.html">Contact</a></div><div class="footer-note">© <span id="year">2026</span> Sainath Revankar</div></div></footer>
+<button class="back-to-top" type="button" aria-label="Back to top" hidden>↑</button>
+<script src="../../../assets/js/site-config.js"></script><script src="../../../assets/js/main.js"></script>
+</body></html>

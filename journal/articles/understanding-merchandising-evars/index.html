@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA | The Sainath Revankar Journal</title>
+<meta name="description" content="Product-level binding, allocation and attribution explained, from Adobe Analytics merchandising eVars to CJA Binding Dimensions and Metrics."><meta name="theme-color" content="#f4f1e7">
+<link rel="canonical" href="https://revankars.github.io/sainath-revankar-journal/journal/articles/understanding-merchandising-evars/"><meta property="og:url" content="https://revankars.github.io/sainath-revankar-journal/journal/articles/understanding-merchandising-evars/">
+<meta property="og:type" content="article"><meta property="og:title" content="Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA">
+<meta property="og:description" content="Product-level binding, allocation and attribution explained, from Adobe Analytics merchandising eVars to CJA Binding Dimensions and Metrics."><meta property="article:published_time" content="2026-11-12">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA"><meta name="twitter:description" content="Product-level binding, allocation and attribution explained, from Adobe Analytics merchandising eVars to CJA Binding Dimensions and Metrics.">
+<link rel="stylesheet" href="../../../assets/css/style.css"><link rel="stylesheet" href="../../../assets/css/components.css">
+<script type="application/ld+json" id="site-structured-data">{"@context":"https://schema.org","@type":"Article","headline":"Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding & Allocation — From Adobe Analytics to CJA","description":"Product-level binding, allocation and attribution explained, from Adobe Analytics merchandising eVars to CJA Binding Dimensions and Metrics.","author":{"@type":"Person","name":"Sainath Revankar"},"datePublished":"2026-11-12","mainEntityOfPage":"https://revankars.github.io/sainath-revankar-journal/journal/articles/understanding-merchandising-evars/","isBasedOn":"https://www.linkedin.com/pulse/understanding-merchandising-evars-product-syntax-binding-revankar-kag7c"}</script>
+</head><body>
+<div class="reading-progress" aria-hidden="true"></div><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav"><a class="brand" href="../../../index.html"><span class="brand-mark" aria-hidden="true">SR</span><span>The Sainath Revankar Journal</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">Menu</button><nav class="nav-links" id="primary-navigation" aria-label="Main navigation"><a href="../../../index.html">Home</a><a class="active" aria-current="page" href="../../index.html">Journal</a><a href="../../../about.html">About</a><a href="../../../certifications.html">Credentials</a><a href="../../../projects.html">Projects</a><a href="../../../contact.html">Contact</a></nav></div></header>
+<main id="main">
+<section class="page-heading article-heading"><div class="container">
+<a class="text-link" href="../../index.html">← Back to the journal</a><div class="eyebrow">Adobe Analytics &amp; CJA</div>
+<h1>Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA</h1><p>Product-level binding, allocation and attribution explained, from Adobe Analytics merchandising eVars to CJA Binding Dimensions and Metrics.</p>
+<div class="article-byline">By Sainath Revankar · <time datetime="2026-11-12">November 12, 2026</time> · <span data-reading-time>19 min read</span></div>
+<p class="editorial-note">Originally published on <a class="text-link" href="https://www.linkedin.com/pulse/understanding-merchandising-evars-product-syntax-binding-revankar-kag7c" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>. Read the article here, with illustrations hosted locally.</p>
+</div></section>
+<section class="section section-white"><div class="container article-layout"><div>
+<article class="article-content"><p>A few months ago, I had several conversations with clients and colleagues who reached out with questions about Merchandising eVars in Adobe Analytics. The questions were primarily around the difference between Product Syntax and Conversion Variable Syntax, how values get associated with individual products, and, more importantly, how Adobe determines which value receives credit when a product is eventually purchased.</p>
+<p>At first glance, merchandising eVars might seem like just another configuration within Adobe Analytics. However, understanding how they work requires looking beyond simply setting an eVar value. Concepts such as product binding, binding events, and allocation play a critical role in determining how conversion credit and revenue are attributed to individual products.</p>
+<p>I have found that this is one of those topics where understanding the underlying mechanics makes a significant difference in how we interpret reporting data and design our measurement strategy.</p>
+<p>Although Product Syntax and Conversion Variable Syntax are specific to Adobe Analytics implementation, the underlying concepts of product-level association, persistence, and attribution remain highly relevant when working with Customer Journey Analytics (CJA).</p>
+<p>In fact, Adobe has carried the merchandising concept into CJA through a capability called Binding Dimensions and Binding Metrics. While the implementation and data modeling approach differ, the objective remains similar: associating the right interaction or finding method with the right product to support accurate business analysis.</p>
+<p>I thought this would be a good opportunity to revisit the concept, explain it with practical examples, and highlight how different configurations influence the data we eventually use to answer business questions.</p>
+<p>Let's start with the fundamentals.</p>
+<h2 id="section-1">1. First, What Is a Merchandising eVar?</h2>
+<p>Before getting into the two implementation approaches, let's understand why merchandising eVars exist.</p>
+<p>In a traditional Adobe Analytics implementation, an eVar captures a value and maintains it according to its configured expiration and allocation settings. This works well for many conversion attribution use cases.</p>
+<p>However, consider an e-commerce scenario.</p>
+<p>A visitor searches for products, views multiple products, adds some of them to the cart, and eventually makes a purchase.</p>
+<p>Imagine the following journey:</p>
+<ul><li>The visitor discovers Product A through an internal keyword search.</li><li>The visitor discovers Product B through a promotional campaign.</li><li>Both products are added to the cart.</li><li>The visitor purchases both products in a single transaction.</li></ul>
+<p>If we use a conventional eVar to capture the finding method, how do we ensure that the revenue from Product A is attributed to internal keyword search while Product B receives credit for the promotional campaign?</p>
+<p>This is where Merchandising eVars come into play.</p>
+<p>A merchandising eVar allows us to associate an eVar value with an individual product rather than simply attributing the value at the visitor or conversion level.</p>
+<figure><img src="../../../assets/images/articles/product-merchandising-values.png" alt="Product - Merchandising eVar value" width="900" height="260" loading="lazy"><figcaption>Product - Merchandising eVar value</figcaption></figure>
+<p>When these products are eventually purchased, Adobe can use these product-level associations to attribute the corresponding revenue to the appropriate merchandising value.</p>
+<p>The important concept here is Binding.</p>
+<p>Binding is the process through which Adobe associates a merchandising eVar value with a product.</p>
+<p>Adobe Analytics supports two approaches to achieve this:</p>
+<ol><li><strong>Product Syntax:</strong> The merchandising eVar value is embedded directly within the products variable.</li><li><strong>Conversion Variable Syntax:</strong> The merchandising eVar value is first set in the eVar and subsequently associated with products through a configured binding event.</li></ol>
+<p>Let's understand how each approach works.</p>
+<h2 id="section-2">2. Product Syntax – Directly Binding an eVar Value to a Product</h2>
+<p>With Product Syntax, the merchandising eVar value is set directly inside the products variable.</p>
+<p>The value appears after the last semicolon in each product entry.</p>
+<p>The general syntax is:</p>
+<pre><code>s.products = ";productID;;;;eVar1=value";</code></pre>
+<p>The product string follows this structure:</p>
+<pre><code>Category;Product;Quantity;Price;Events;Merchandising eVars</code></pre>
+<p>For example:</p>
+<pre><code>s.products = ";12345;;;;eVar1=internal keyword search";</code></pre>
+<p>Here:</p>
+<ul><li>12345 represents the product ID.</li><li>eVar1 is the merchandising eVar.</li><li>internal keyword search is the value associated with that product.</li></ul>
+<p>The important distinction is that the value is immediately bound to product 12345 on that hit.</p>
+<p>You do not need a separate binding event.</p>
+<h3>Example 1: The same product receives two different values</h3>
+<p>Consider a visitor who interacts with the same product through two different finding methods.</p>
+<figure><img src="../../../assets/images/articles/same-product-two-values.png" alt="The same product receives two different values" width="1202" height="266" loading="lazy"><figcaption>The same product receives two different values</figcaption></figure>
+<p>The same product, 12345, receives two different merchandising values across two hits.</p>
+<p>Now consider the Allocation setting.</p>
+<p><strong>Original Value (First)</strong></p>
+<ul><li>On Hit 1, Product 12345 is associated with internal keyword search.</li><li>On Hit 2, Adobe encounters another value, internal campaign, for the same product.</li><li>Since the product already has an established binding, the new value is ignored.</li><li>When the product is purchased, the revenue is credited to internal keyword search.</li></ul>
+<p><strong>Most Recent (Last)</strong></p>
+<ul><li>On Hit 1, Product 12345 is associated with internal keyword search.</li><li>On Hit 2, the product receives a new binding, internal campaign.</li><li>The latest value replaces the previous product association.</li><li>When the product is purchased, the revenue is credited to internal campaign.</li></ul>
+<p>This illustrates how Allocation determines whether an existing product association is retained or replaced when another binding attempt occurs.</p>
+<figure><img src="../../../assets/images/articles/first-vs-last.png" alt="First vs Last" width="744" height="115" loading="lazy"><figcaption>First vs Last</figcaption></figure>
+<h3>Example 2: Two products receive different values</h3>
+<p>Now consider a slightly different scenario where the visitor interacts with two different products.</p>
+<figure><img src="../../../assets/images/articles/two-products.png" alt="Separate merchandising values for two products" width="744" height="151" loading="lazy"><figcaption>Separate merchandising values for two products</figcaption></figure>
+<p>In this example:</p>
+<ul><li>Product A is associated with Value A.</li><li>Product B is associated with Value B.</li></ul>
+<p>When both products are purchased in the same order:</p>
+<figure><img src="../../../assets/images/articles/revenue-credit.png" alt="Revenue Credit" width="860" height="182" loading="lazy"><figcaption>Revenue Credit</figcaption></figure>
+<p>Both values also receive credit for one order because the transaction contains a product associated with each value.</p>
+<p>Notice that the Allocation setting does not influence this example. Neither product receives a second binding attempt, so there is no conflict between an existing and a new value.</p>
+<h3>Example 3: Same product ID with different child SKUs</h3>
+<p>Another interesting use case is when an e-commerce business uses a parent product ID but sells multiple product variations.</p>
+<p>Imagine a T-shirt retailer selling:</p>
+<ul><li>Medium Blue T-shirt</li><li>Large Red T-shirt</li></ul>
+<p>Both products share the parent product ID tshirt123, but each has a different child SKU.</p>
+<p>Suppose eVar10 captures the child SKU.</p>
+<p>The implementation could look like this:</p>
+<pre><code>s.events = "purchase";
+s.products = ";tshirt123;1;20;;eVar10=tshirt123-m-blue,"
+  + ";tshirt123;1;20;;eVar10=tshirt123-l-red";</code></pre>
+<p>Here, each product instance receives its own merchandising value, even though both entries share the same parent product ID.</p>
+<figure><img src="../../../assets/images/articles/child-skus.png" alt="Child SKU associations for a shared parent product" width="1146" height="198" loading="lazy"><figcaption>Child SKU associations for a shared parent product</figcaption></figure>
+<p>This is particularly useful when the business needs to understand performance at the product-variation level rather than only at the parent product level.</p>
+<h3>When should you use Product Syntax?</h3>
+<p>Product Syntax is especially useful when:</p>
+<ul><li>Different products on the same hit need different merchandising values.</li><li>You already have the relevant finding method information when the product interaction occurs.</li><li>You want to bind a value directly without configuring binding events.</li></ul>
+<p>The limitation is that you must explicitly include the complete merchandising eVar value in the product string whenever you want to establish a binding.</p>
+<p>For example, if you use five merchandising eVars to identify a product finding method, you need to assemble all five values inside the product string.</p>
+<p>That can become complicated.</p>
+<p>This brings us to the second approach: Conversion Variable Syntax.</p>
+<h2 id="section-3">3. Conversion Variable Syntax – Staging and Binding the Value</h2>
+<p>Conversion Variable Syntax works differently.</p>
+<p>Instead of embedding the eVar inside the products variable, you set the merchandising value directly in the eVar.</p>
+<p>For example:</p>
+<pre><code>s.eVar1 = "internal keyword search";</code></pre>
+<p>Think of the eVar as a staging area.</p>
+<p>Adobe remembers the value until a configured binding event occurs alongside a product.</p>
+<p>There are two stages to understand.</p>
+<h3>Stage 1: Staging</h3><p>On Hit 1:</p>
+<pre><code>s.eVar1 = "internal keyword search";</code></pre>
+<p>The value is staged in the eVar.</p>
+<p>It persists according to the eVar's expiration settings.</p>
+<p>For merchandising eVars using Conversion Variable Syntax, the staged value always reflects the most recently sent value, regardless of the Allocation setting.</p>
+<h3>Stage 2: Binding</h3><p>On Hit 2:</p>
+<pre><code>s.products = ";sandal123";
+s.events = "prodView";</code></pre>
+<p>The staged value is now associated with product sandal123, provided prodView is configured as a binding event.</p>
+<p>The distinction is important:</p>
+<p>Setting an eVar does not automatically bind the value to a product.</p>
+<p>A binding event must occur on a hit containing products.</p>
+<h3>What are Merchandising Binding Events?</h3>
+<p>A binding event tells Adobe when to associate the staged eVar value with the products on that hit.</p>
+<figure><img src="../../../assets/images/articles/binding-events.png" alt="Binding events" width="1202" height="310" loading="lazy"><figcaption>Binding events</figcaption></figure>
+<p>You can configure multiple binding events for the same merchandising eVar.</p>
+<p>For example, you might configure:</p>
+<ul><li>Product View</li><li>Cart Add</li><li>Purchase</li></ul>
+<p>If any configured binding event occurs on a hit containing products, Adobe attempts to bind the staged value to every product on that hit.</p>
+<p>What about All?</p>
+<p>By default, if no specific binding event is selected, Adobe uses All.</p>
+<p>This means binding can occur whenever another event or eVar is present on a hit containing products.</p>
+<p>One important distinction: Props do not trigger merchandising binding.</p>
+<h3>Example: Binding with a configured event</h3>
+<p>Consider this implementation.</p>
+<p><strong>Hit 1: Visitor performs an internal search</strong></p>
+<pre><code>s.eVar1 = "internal keyword search";
+s.eVar2 = "sandals";</code></pre>
+<p>At this point:</p>
+<ul><li>eVar1 has the value internal keyword search.</li><li>eVar2 has the value sandals.</li><li>Neither value is necessarily bound to a product yet.</li></ul>
+<p><strong>Hit 2: Visitor views a sandal</strong></p>
+<pre><code>s.products = ";sandal123";
+s.events = "prodView";</code></pre>
+<p>If prodView is configured as a binding event for both eVars:</p>
+<ul><li>eVar1 binds internal keyword search to sandal123.</li><li>eVar2 binds sandals to sandal123.</li></ul>
+<p>Both merchandising eVars are now associated with the product.</p>
+<p>Later, when the visitor purchases the sandal, Adobe can attribute the purchase to the bound values.</p>
+<p>This approach separates the process of capturing the finding method from the process of associating it with a product.</p>
+<h2 id="section-4">4. Understanding Allocation with Conversion Variable Syntax</h2>
+<p>This is where things become particularly interesting.</p>
+<p>Let's walk through an example to understand how Allocation works when multiple binding attempts occur.</p>
+<figure><img src="../../../assets/images/articles/allocation.png" alt="Allocation" width="1108" height="382" loading="lazy"><figcaption>Allocation</figcaption></figure>
+<p>Let's understand what happens at each stage.</p>
+<p><strong>Hit 1: Value A is staged</strong></p>
+<pre><code>s.eVar1 = "Value A";</code></pre>
+<p>Value A is staged in the eVar.</p>
+<p><strong>Hit 2: Value A is bound to both products</strong></p>
+<pre><code>s.products = ";productA,;productB";
+s.events = "bindingEvent";</code></pre>
+<p>Value A binds to both products.</p>
+<figure><img src="../../../assets/images/articles/bound-values.png" alt="Product Bound value" width="754" height="218" loading="lazy"><figcaption>Product Bound value</figcaption></figure>
+<p><strong>Hit 3: A new value is staged</strong></p>
+<pre><code>s.eVar1 = "Value B";</code></pre>
+<p>Value B replaces Value A in the staging area.</p>
+<p>This is an important distinction: the staged value always reflects the most recently sent value, regardless of the Allocation setting.</p>
+<p>However, the existing product bindings do not automatically change.</p>
+<p><strong>Hit 4: A new binding attempt occurs for Product A</strong></p>
+<pre><code>s.products = ";productA";
+s.events = "bindingEvent";</code></pre>
+<p>Now Adobe attempts to bind Value B to Product A.</p>
+<p>What happens depends on Allocation.</p>
+<h3>Original Value (First)</h3>
+<p>Product A already has Value A.</p><p>Therefore, Adobe ignores the new binding attempt.</p><p>Product B also remains bound to Value A.</p>
+<figure><img src="../../../assets/images/articles/final-binding-first.png" alt="Product Final binding (First)" width="760" height="218" loading="lazy"><figcaption>Product Final binding (First)</figcaption></figure><p>At Hit 5, both products are purchased.</p><p>All revenue is attributed to Value A.</p>
+<h3>Most Recent (Last)</h3>
+<p>Product A receives the new binding.</p><p>Product B does not appear on Hit 4, so its existing binding remains unchanged.</p>
+<figure><img src="../../../assets/images/articles/final-binding-last.png" alt="Product Final binding (Last)" width="754" height="218" loading="lazy"><figcaption>Product Final binding (Last)</figcaption></figure><p>At Hit 5:</p>
+<ul><li>Product A revenue goes to Value B.</li><li>Product B revenue goes to Value A.</li></ul>
+<p>The important takeaway is that Allocation is evaluated independently for each product, not globally for the entire hit.</p><p>In other words, changing the binding for one product does not automatically change the binding for other products.</p>
+<h2 id="section-5">5. Product Syntax vs. Conversion Variable Syntax</h2>
+<p>Here is the comparison that matters most when designing an Adobe Analytics implementation.</p>
+<figure><img src="../../../assets/images/articles/syntax-comparison.png" alt="Product vs Conversion Variable Syntax" width="744" height="257" loading="lazy"><figcaption>Product vs Conversion Variable Syntax</figcaption></figure>
+<p>Neither approach is universally better. The right choice depends on the business requirement, data collection architecture, and the level of control needed over product-level attribution.</p>
+<p>If the implementation requires different merchandising values for multiple products on the same hit, Product Syntax provides that flexibility.</p>
+<p>If the implementation needs to capture finding method information separately and associate it with products at a later interaction, Conversion Variable Syntax is often easier to manage.</p>
+<h2 id="section-6">6. Real-World Implementation Example: Internal Product Finding Methods</h2>
+<p>Consider an e-commerce website selling footwear.</p><p>A customer searches for sandals using the internal search engine.</p><p>The website captures the following information:</p>
+<pre><code>s.eVar1 = "internal keyword search";
+s.eVar2 = "sandals";
+s.eVar3 = "non-internal campaign";
+s.eVar4 = "non-browse";
+s.eVar5 = "non-cross-sell";</code></pre>
+<p>These eVars describe how the visitor found the product.</p><p>With Conversion Variable Syntax, you can stage these values on the search results page.</p><p>When the visitor views a sandal:</p>
+<pre><code>s.products = ";sandal123";
+s.events = "prodView";</code></pre>
+<p>If prodView is configured as a binding event for all five eVars, Adobe associates the staged values with the sandal.</p>
+<p>You don't have to reconstruct a complicated product string containing five merchandising eVars.</p>
+<p>With Product Syntax, you would need something like:</p>
+<pre><code>s.products =
+";sandal123;;;;eVar2=sandals|eVar1=internal keyword search|eVar3=non-internal campaign|eVar4=non-browse|eVar5=non-cross-sell";</code></pre>
+<p>You also need to carry the finding method information from the search results page to the product detail page, or make it available when a cart addition happens directly from the search results.</p>
+<p>This is why Conversion Variable Syntax is often easier when working with multiple finding method dimensions.</p>
+<h3>Adobe's recommended configuration for product finding methods</h3>
+<p>Adobe recommends the following configuration for product finding method merchandising eVars:</p>
+<figure><img src="../../../assets/images/articles/recommended-configuration.png" alt="Recommended configuration for product finding methods" width="744" height="281" loading="lazy"><figcaption>Recommended configuration for product finding methods</figcaption></figure>
+<p>Why Original Value (First)?</p>
+<p>Imagine a customer:</p>
+<ol><li>Searches for sandals and adds sandal123 to the cart.</li><li>The product is associated with internal keyword search.</li><li>Three days later, the customer browses through Women → Shoes → Sandals.</li><li>The customer views the same product again and purchases it.</li></ol>
+<p>With Most Recent (Last), the subsequent browse interaction can replace the original internal search association. The purchase is then credited to browse.</p>
+<p>With Original Value (First), the original finding method retains credit.</p>
+<p>This is why Adobe recommends Original Value (First) for product finding method eVars.</p>
+<p>Expiration is equally important. If the product is not purchased and the binding expires, a subsequent finding method can establish a new association.</p>
+<p>The expiration period should reflect the business's actual cart retention and purchasing behavior.</p>
+<p>Documentation: <a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/evar-merchandising">Adobe Analytics – Merchandising eVars</a></p>
+<h2 id="section-7">7. The Most Important Concepts to Remember</h2>
+<p>For Adobe Analytics implementation and certification questions, remember these distinctions:</p>
+<figure><img src="../../../assets/images/articles/concepts-to-remember.png" alt="Concepts to remember" width="744" height="220" loading="lazy"><figcaption>Concepts to remember</figcaption></figure>
+<p>One additional consideration: Adobe does not recommend using the default Instances metric for merchandising eVars because its behavior does not necessarily reflect product-level bindings. This is particularly important when analyzing merchandising values in Data Feeds and Workspace.</p>
+<h2 id="section-8">8. What Does This Mean for Customer Journey Analytics (CJA)?</h2>
+<p>Although the discussion so far has focused on Adobe Analytics, the underlying concepts of merchandising, product-level association, and binding are equally relevant when working with Customer Journey Analytics.</p>
+<p>In fact, Adobe has carried the merchandising concept into CJA through a capability explicitly called Binding, available through Data Views.</p>
+<p>However, there is an important architectural difference.</p>
+<p>CJA does not use eVars, props, or events in the traditional Adobe Analytics sense. Instead, it uses Experience Platform schemas and datasets, with dimensions and metrics configured through Data Views.</p>
+<p>This means we should not simply replicate the traditional merchandising eVar configuration in CJA. We need to understand how the underlying data is modeled and how CJA's persistence and attribution capabilities can achieve the intended business outcome.</p>
+<p>Let's revisit our e-commerce example.</p>
+<p>A customer discovers Product A through an internal search and Product B through an email campaign. Both products are eventually purchased in the same transaction.</p>
+<p>We want to answer business questions such as:</p>
+<ul><li>Which finding method contributed to the revenue of each product?</li><li>Which campaign influenced product discovery?</li><li>How much revenue should be attributed to internal search versus external campaigns?</li><li>How do individual product interactions contribute to overall customer journey performance?</li></ul>
+<p>Simply capturing the finding method and applying a First Touch or Last Touch attribution model is not necessarily sufficient.</p><p>We need to ensure that the finding method is associated with the correct product.</p><p>This is where CJA's Binding capability becomes particularly important.</p>
+<h3>8.1 Understanding Binding in CJA</h3>
+<p>CJA offers several ways to persist dimension values beyond the event on which they were initially captured.</p><p>One of these persistence methods is called Binding.</p><p>Adobe describes Binding as the evolution of the merchandising concept from earlier versions of Adobe Analytics.</p><p>It is particularly useful when working with XDM arrays of objects.</p><p>For example, consider an e-commerce event containing multiple products:</p>
+<pre><code>{
+  "PersonID": "12345",
+  "product": [
+    { "name": "Product A", "price": 50 },
+    { "name": "Product B", "price": 30 }
+  ],
+  "purchase": 1
+}</code></pre>
+<p>Imagine that Product A was discovered through internal search, while Product B was discovered through an email campaign.</p>
+<p>We want the appropriate finding method to be associated with each product rather than applying one value indiscriminately to the entire transaction.</p>
+<p>CJA Binding allows a dimension to be associated with an appropriate dimension within an object array.</p>
+<p>For example, we can bind a finding method dimension to Product Name.</p>
+<p>When the same product appears in a subsequent event, CJA can recall the associated finding method and carry it forward.</p>
+<p>This is particularly useful when product attributes are captured during product discovery but are not repeated in the subsequent purchase event.</p>
+<h3>8.2 Binding Dimensions and Binding Metrics</h3>
+<p>CJA provides two important configuration concepts that help implement this functionality.</p>
+<h4>Binding Dimension</h4>
+<p>A Binding Dimension establishes the relationship between a dimension that needs to persist and another dimension that identifies the object to which it belongs.</p><p>For example:</p>
+<ul><li>Finding Method: Internal Search</li><li>Product Name: Product A</li></ul>
+<p>By binding Finding Method to Product Name, CJA can associate the finding method with the appropriate product rather than applying it indiscriminately to every product in a subsequent event.</p>
+<p>Consider another example from Adobe's documentation.</p><p>A customer views a washing machine with the following attributes:</p>
+<pre><code>{
+  "product": [
+    { "name": "Washing Machine 2000", "color": "white", "type": "front loader" }
+  ]
+}</code></pre>
+<p>Later, the customer views a dryer:</p>
+<pre><code>{
+  "product": [
+    { "name": "Dryer 2000", "color": "neon orange" }
+  ]
+}</code></pre>
+<p>Finally, the customer purchases both products:</p>
+<pre><code>{
+  "orders": 1,
+  "product": [
+    { "name": "Washing Machine 2000", "price": 1600 },
+    { "name": "Dryer 2000", "price": 499 }
+  ]
+}</code></pre>
+<p>Notice that the purchase event does not contain the product color.</p>
+<p>Without an appropriate binding relationship, persisting the product color across events could lead to incorrect attribution.</p>
+<p>For example, the latest color value could be incorrectly associated with both products.</p>
+<p>By binding Product Color to Product Name, CJA can maintain the correct association:</p>
+<figure><img src="../../../assets/images/articles/product-color-binding.png" alt="Product colors associated with the correct products" width="744" height="92" loading="lazy"><figcaption>Product colors associated with the correct products</figcaption></figure>
+<p>This is a good illustration of why Binding is important when working with arrays of objects.</p>
+<h4>Binding Metric</h4>
+<p>A Binding Metric acts as a trigger for a binding relationship when the selected dimension is at a higher level than the binding dimension within an object array.</p>
+<p>Consider an internal search scenario.</p><p>A visitor searches for "Boxing Gloves".</p><p>The search results page captures:</p>
+<ul><li>Search Term: Boxing Gloves</li><li>Searches Metric: 1</li><li>Products displayed in the product array.</li></ul>
+<p>The customer selects one product and adds it to the cart.</p>
+<p>We want the search term to receive credit for the appropriate product rather than being indiscriminately associated with all products in a later transaction.</p>
+<p>We can configure:</p>
+<ul><li>Search Term as the dimension to persist.</li><li>Product Name as the Binding Dimension.</li><li>Searches as the Binding Metric.</li></ul>
+<p>The Searches metric triggers the binding when the search term and product information are present on the relevant event.</p>
+<p>CJA associates the search term with the product names in the object array. When those products appear in subsequent events, the associated search term can be carried forward.</p>
+<p>An important distinction: a Binding Metric is not required in every CJA binding scenario. Adobe automatically detects the relationship between the selected dimension and binding dimension. When the binding dimension exists within an object array and the selected dimension is at a higher level, a Binding Metric is required to trigger the association.</p>
+<p>This is different from Adobe Analytics, where Conversion Variable Syntax uses configured Merchandising Binding Events.</p>
+<p>Read more: <a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-usecases/data-views/binding-dimensions-metrics">Adobe – Use Binding Dimensions and Metrics in Customer Journey Analytics</a></p>
+<h3>8.3 Understanding Data Granularity and Relationships</h3>
+<p>Another important consideration when implementing CJA is understanding the granularity of the underlying data.</p>
+<p>Unlike traditional Adobe Analytics implementations, where the products variable provides a predefined product-level structure, CJA relies on the XDM schema and the relationships represented within the datasets.</p>
+<p>For an e-commerce implementation, we should understand whether the data represents:</p>
+<ul><li>Customer interaction or event.</li><li>Product interaction.</li><li>Individual order line.</li><li>Order or transaction.</li><li>Customer-level information.</li></ul>
+<p>For example, an order containing three products should preserve the individual product attributes and their relationships to the order.</p>
+<p>This is important because a customer-level or event-level finding method should not automatically receive credit for every product in a transaction unless that is the intended business logic.</p>
+<p>The XDM object array structure, together with the appropriate binding configuration, helps address these requirements.</p>
+<h3>8.4 Understanding Persistence, Allocation, and Attribution in CJA</h3>
+<p>There is another important difference worth highlighting.</p>
+<p>In Adobe Analytics, merchandising eVar allocation determines whether the original or most recent product binding receives credit.</p>
+<p>In CJA, dimension persistence provides allocation options through Data View settings.</p>
+<figure><img src="../../../assets/images/articles/cja-allocation-options.png" alt="CJA allocation options" width="744" height="150" loading="lazy"><figcaption>CJA allocation options</figcaption></figure>
+<p>CJA also provides expiration settings that determine how long a dimension value persists.</p>
+<p>These include Session, Person Reporting Window, Custom Time, and Metric-based expiration.</p>
+<p>It is important to distinguish two concepts here:</p>
+<h4>Dimension Persistence and Allocation</h4><p>Determines which dimension value persists and how it is associated with subsequent events.</p>
+<h4>Metric Attribution</h4><p>Determines how conversion credit is distributed among dimension values within a defined attribution scope and lookback window.</p>
+<p>CJA supports attribution models such as:</p>
+<ul><li>First Touch</li><li>Last Touch</li><li>Linear</li><li>U-Shaped</li><li>J-Shaped</li><li>Inverse J</li><li>Participation</li></ul>
+<p>These are configured through metric attribution settings in Data Views and Analysis Workspace.</p>
+<p>An important technical distinction is that when a non-default attribution model is applied to a metric in a report, that attribution model overrides the allocation setting configured on the dimension for that report. Therefore, persistence allocation and metric attribution should not be treated as interchangeable settings.</p>
+<p>For product-level use cases, understanding both configurations is important.</p>
+<p>References:</p>
+<ul><li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-dataviews/component-settings/persistence">Adobe – Persistence Component Settings</a></li><li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-dataviews/component-settings/attribution">Adobe – Attribution Component Settings</a></li></ul>
+<h3>8.5 Adobe Analytics Merchandising vs. CJA Binding: Bringing It Together</h3>
+<p>This is perhaps the most important takeaway when moving from Adobe Analytics to CJA.</p>
+<p>The concepts are related, but the implementation is not identical.</p>
+<figure><img src="../../../assets/images/articles/analytics-vs-cja-binding.png" alt="Adobe Analytics Merchandising vs. CJA Binding" width="744" height="178" loading="lazy"><figcaption>Adobe Analytics Merchandising vs. CJA Binding</figcaption></figure>
+<p>The important point is that CJA provides a flexible approach to achieving product-level analytical relationships through its Data View configuration and XDM data model.</p>
+<p>Rather than simply migrating the old Adobe Analytics variable configuration, we should understand the business requirement and design the appropriate relationships in CJA.</p>
+<h3>8.6 Designing Around Business Requirements</h3>
+<p>Ultimately, the objective is not to replicate every Adobe Analytics merchandising eVar configuration in CJA.</p>
+<p>Instead, we should design the Experience Platform data model and CJA Data Views around the business questions we need to answer.</p>
+<p>Some important considerations include:</p>
+<h4>1. Data Granularity</h4><p>Ensure product-level information is represented at the appropriate level, particularly when multiple products exist within the same transaction.</p>
+<h4>2. Data Relationships</h4><p>Model product identifiers, order identifiers, customer identities, and finding method attributes appropriately.</p>
+<h4>3. Binding</h4><p>Use Binding Dimensions and Binding Metrics where necessary to associate higher-level interactions, such as search terms, with individual products.</p>
+<h4>4. Persistence and Allocation</h4><p>Configure dimension persistence and expiration based on the intended business rules.</p>
+<h4>5. Attribution</h4><p>Select the appropriate metric attribution model, container, and lookback window based on the business question.</p>
+<p>The objective is not just to make the data available in CJA. It is to ensure that the data is structured, associated, and attributed in a way that supports meaningful analysis and accurate business interpretation.</p>
+<h2 id="section-9">9. Final Thoughts</h2>
+<p>Merchandising eVars are a good example of how a seemingly small implementation decision can have a significant impact on reporting and business interpretation.</p>
+<p>Understanding the difference between Product Syntax and Conversion Variable Syntax, when binding occurs, and how Allocation influences product-level associations helps us make better implementation decisions and avoid misleading attribution results.</p>
+<p>More importantly, these concepts reinforce a broader principle that applies beyond Adobe Analytics.</p>
+<p>Adobe Analytics Merchandising → CJA Binding Dimensions and Metrics</p>
+<p>The underlying business objective remains the same: associate the right interaction with the right product and ensure that the resulting data supports accurate analysis.</p>
+<p>Whether you are working with Adobe Analytics or Customer Journey Analytics, understanding these relationships is essential to building reliable measurement solutions and delivering insights that the business can confidently act upon.</p>
+<p>Collecting the data is only one part of the equation. Understanding how the data is associated, persisted, attributed, and modeled is what ultimately makes it useful for business decision-making.</p>
+<h2 id="section-10">References and Further Reading</h2>
+<p>For readers who want to explore the concepts in more detail, here are the relevant Adobe Experience League resources:</p>
+<h3>Adobe Analytics</h3>
+<ol><li><a href="https://experienceleague.adobe.com/en/docs/analytics/components/dimensions/evar-merchandising">Merchandising eVars – Understanding Product Syntax and Conversion Variable Syntax</a></li><li><a href="https://experienceleague.adobe.com/en/docs/analytics/implementation/vars/page-vars/evar-merchandising">Implementing Merchandising eVars</a></li><li><a href="https://experienceleague.adobe.com/en/docs/analytics/admin/admin-tools/manage-report-suites/edit-report-suite/conversion-variables/conversion-var-admin">Conversion Variables – Admin Guide</a></li></ol>
+<h3>Customer Journey Analytics</h3>
+<ol><li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-usecases/data-views/binding-dimensions-metrics">Use Binding Dimensions and Metrics in Customer Journey Analytics</a></li><li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-dataviews/component-settings/persistence">Persistence Component Settings</a></li><li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-dataviews/component-settings/attribution">Attribution Component Settings</a></li><li><a href="https://experienceleague.adobe.com/en/docs/analytics-platform/using/cja-overview/cja-b2c-overview/cja-faq">Customer Journey Analytics FAQ</a></li></ol>
+<p>#AdobeAnalytics #CustomerJourneyAnalytics #CJA #AdobeExperiencePlatform #DigitalAnalytics #DataAnalytics #MarketingAnalytics #Attribution #Adobe</p>
+</article>
+<div class="article-sharing"><button class="button" type="button" data-share>Share article</button><button class="button button-outline" type="button" data-copy-url>Copy article URL</button><a class="text-link" data-social-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frevankars.github.io%2Fsainath-revankar-journal%2Fjournal%2Farticles%2Funderstanding-merchandising-evars%2F">Share on LinkedIn ↗</a><a class="text-link" data-social-share="x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frevankars.github.io%2Fsainath-revankar-journal%2Fjournal%2Farticles%2Funderstanding-merchandising-evars%2F">Share on X ↗</a><span class="share-status" role="status" aria-live="polite"></span></div>
+<nav class="article-pagination" aria-label="Article navigation"><a href="../../index.html"><span>All articles</span><strong>Journal index →</strong></a><a href="../classification-rule-builder-retirement/index.html"><span>Next article</span><strong>Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare</strong></a></nav>
+<section class="related-articles" aria-labelledby="related-heading"><h2 id="related-heading">Related articles</h2><p><a class="text-link" href="../classification-rule-builder-retirement/index.html">Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare →</a></p>
+<p><a class="text-link" href="../introducing-cja-intelligence/index.html">Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence →</a></p></section>
+</div><aside class="article-aside"><strong>In this article</strong><a href="#section-1">1. First, What Is a Merchandising eVar?</a>
+<a href="#section-2">2. Product Syntax – Directly Binding an eVar Value to a Product</a>
+<a href="#section-3">3. Conversion Variable Syntax – Staging and Binding the Value</a>
+<a href="#section-4">4. Understanding Allocation with Conversion Variable Syntax</a>
+<a href="#section-5">5. Product Syntax vs. Conversion Variable Syntax</a>
+<a href="#section-6">6. Real-World Implementation Example: Internal Product Finding Methods</a>
+<a href="#section-7">7. The Most Important Concepts to Remember</a>
+<a href="#section-8">8. What Does This Mean for Customer Journey Analytics (CJA)?</a>
+<a href="#section-9">9. Final Thoughts</a>
+<a href="#section-10">References and Further Reading</a></aside></div></section>
+</main><footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">The Sainath Revankar Journal</div><div class="footer-note">Ideas, insights and experiences worth sharing.</div></div><div class="footer-links"><a href="../../index.html">Journal</a><a href="../../../about.html">About</a><a href="../../../projects.html">Projects</a><a href="../../../contact.html">Contact</a></div><div class="footer-note">© <span id="year">2026</span> Sainath Revankar</div></div></footer>
+<button class="back-to-top" type="button" aria-label="Back to top" hidden>↑</button>
+<script src="../../../assets/js/site-config.js"></script><script src="../../../assets/js/main.js"></script>
+</body></html>

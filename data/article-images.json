@@ -1,0 +1,216 @@
+[
+  {
+    "name": "product-merchandising-values",
+    "after": "A merchandising eVar allows us to associate an eVar value with an individual product rather than simply attributing the value at the visitor or conversion level.",
+    "caption": "Product - Merchandising eVar value",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGYTxf9q2vL_A/article-inline_image-shrink_1500_2232/B56aHMJLTeIsAQ-/0/1794426320387?e=2147483647&v=beta&t=9eKW4RQB1r7n8jZqC2boUDJ9_1xX1w330p4L3o59Cdc"
+  },
+  {
+    "name": "same-product-two-values",
+    "after": "Consider a visitor who interacts with the same product through two different finding methods.",
+    "caption": "The same product receives two different values",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQH8QcgimVpTOQ/article-inline_image-shrink_1500_2232/B56aHMJxsaHsAU-/0/1794426477942?e=2147483647&v=beta&t=J3PzjBOx0q_zBWs02mfuaG0kb9F9egxlVmNRKI9KpKc"
+  },
+  {
+    "name": "first-vs-last",
+    "after": "This illustrates how Allocation determines whether an existing product association is retained or replaced when another binding attempt occurs.",
+    "caption": "First vs Last",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQEmVIBzOcV7Fw/article-inline_image-shrink_400_744/B56aHMKZviJEAM-/0/1794426641751?e=2147483647&v=beta&t=Y-j7LWC4s51AElHUcf5v9HePtpCwDGiXEC0p6vI6lfU"
+  },
+  {
+    "name": "two-products",
+    "after": "Now consider a slightly different scenario where the visitor interacts with two different products.",
+    "caption": "Separate merchandising values for two products",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQHmPbH3eVlJIg/article-inline_image-shrink_400_744/B56aHMKzbeH0AM-/0/1794426747040?e=2147483647&v=beta&t=beAF4pVnQL7QvI33JQ4HXW5b1jnNVIFnQnXTLyC4JUQ"
+  },
+  {
+    "name": "revenue-credit",
+    "after": "When both products are purchased in the same order:",
+    "caption": "Revenue Credit",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGvGqyjFT_KrA/article-inline_image-shrink_1500_2232/B56aHMLbXRKUAQ-/0/1794426910455?e=2147483647&v=beta&t=azAi9Z6evMIoVojbZRWa2s_C2GainYJJubGYVIjTGSw"
+  },
+  {
+    "name": "child-skus",
+    "after": "Here, each product instance receives its own merchandising value, even though both entries share the same parent product ID.",
+    "caption": "Child SKU associations for a shared parent product",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQES0AjQ38dZnQ/article-inline_image-shrink_1000_1488/B56aHMMBMPHUAI-/0/1794427065413?e=2147483647&v=beta&t=ZEALL3cWfdKz2uqE6FPeUCQMRBP2OwrWJ_F6fsoItOQ"
+  },
+  {
+    "name": "binding-events",
+    "after": "A binding event tells Adobe when to associate the staged eVar value with the products on that hit.",
+    "caption": "Binding events",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQE3MlIwQ7XNVQ/article-inline_image-shrink_1500_2232/B56aHMMeyDH4AQ-/0/1794427186668?e=2147483647&v=beta&t=7y2Fj8zfpdCvbhKYs-ylj0LqM9thfA4EgRYSxMB1sls"
+  },
+  {
+    "name": "allocation",
+    "after": "Let's walk through an example to understand how Allocation works when multiple binding attempts occur.",
+    "caption": "Allocation",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQHrhgFhw3G4QA/article-inline_image-shrink_1500_2232/B56aHMNCeUGUAQ-/0/1794427333033?e=2147483647&v=beta&t=6c0medwemJ5ec6QTL8laI8Jfq2-Ayn01xYiUEbhmrRU"
+  },
+  {
+    "name": "bound-values",
+    "after": "Value A binds to both products.",
+    "caption": "Product Bound value",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGjJDvJVZGNzw/article-inline_image-shrink_1500_2232/B56aHMNe95H0AQ-/0/1794427449647?e=2147483647&v=beta&t=2hZf3vj6BcHpHEcg8kbeY5gyE8pfeHwEheWx3pNh9Do"
+  },
+  {
+    "name": "final-binding-first",
+    "after": "Product B also remains bound to Value A.",
+    "caption": "Product Final binding (First)",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGGD4gygboOLw/article-inline_image-shrink_1500_2232/B56aHMOD3YJgAQ-/0/1794427600667?e=2147483647&v=beta&t=RcdLXITGVkJJnfeIiMD05RHRTfz57cfTE1FLG--dGHk"
+  },
+  {
+    "name": "final-binding-last",
+    "after": "Product B does not appear on Hit 4, so its existing binding remains unchanged.",
+    "caption": "Product Final binding (Last)",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQHp0bNPQaJ23A/article-inline_image-shrink_1000_1488/B56aHMOeI3IsAM-/0/1794427708232?e=2147483647&v=beta&t=2VSx-P8Xf7ruprD7sXZL2J-PCQbMhy5AwGw5AGlPmq8"
+  },
+  {
+    "name": "syntax-comparison",
+    "after": "Here is the comparison that matters most when designing an Adobe Analytics implementation.",
+    "caption": "Product vs Conversion Variable Syntax",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQH5u20OoEYXoQ/article-inline_image-shrink_400_744/B56aHMPMcGJEAM-/0/1794427898323?e=2147483647&v=beta&t=jxIVv0PDjoa2dY3fLrq2dSmvzWMfrU8r711zlgWPG78"
+  },
+  {
+    "name": "recommended-configuration",
+    "after": "Adobe recommends the following configuration for product finding method merchandising eVars:",
+    "caption": "Recommended configuration for product finding methods",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQHTOkV5gK_nAw/article-inline_image-shrink_400_744/B56aHMPnS0J0AM-/0/1794428008044?e=2147483647&v=beta&t=TTDHH2eWA7G_mVgJTqciiimOhs8EDqtY-f-zbV00-ao"
+  },
+  {
+    "name": "concepts-to-remember",
+    "after": "For Adobe Analytics implementation and certification questions, remember these distinctions:",
+    "caption": "Concepts to remember",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQG8Az_CbJCfeg/article-inline_image-shrink_400_744/B56aHMQOKgKMAM-/0/1794428167423?e=2147483647&v=beta&t=MUNJII-q06vJ6oi7kH0YdO9W4jxmp4F6WRwIWzGZHMQ"
+  },
+  {
+    "name": "product-color-binding",
+    "after": "By binding Product Color to Product Name, CJA can maintain the correct association:",
+    "caption": "Product colors associated with the correct products",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQEyuf_2l__tjw/article-inline_image-shrink_400_744/B56aHMQkHiIwAM-/0/1794428257238?e=2147483647&v=beta&t=-OCDWmSLkZ0kXybXjq71860vzuyM5EiEWMbTF4vbURk"
+  },
+  {
+    "name": "cja-allocation-options",
+    "after": "In CJA, dimension persistence provides allocation options through Data View settings.",
+    "caption": "CJA allocation options",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQEJbdVto_HF4Q/article-inline_image-shrink_400_744/B56aHMQ66.KAAM-/0/1794428350690?e=2147483647&v=beta&t=Z7Fsyp12sZm-hZNnWSSt8h6zHvXTKrKeQXccgrYSF1o"
+  },
+  {
+    "name": "analytics-vs-cja-binding",
+    "after": "The concepts are related, but the implementation is not identical.",
+    "caption": "Adobe Analytics Merchandising vs. CJA Binding",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQFFC8gZg6wxzw/article-inline_image-shrink_400_744/B56aHMRQW8J4AQ-/0/1794428438441?e=2147483647&v=beta&t=bJ_P-RNf4AKnMQdwepI8gISYTELuc8Ru60bi7hcMk3c"
+  },
+  {
+    "article": "classification-rule-builder-retirement",
+    "name": "classification-components-menu",
+    "after": "In short, rule management and classification configuration are now handled in one place. To find it, navigate to Components → Classification Sets.",
+    "caption": "Classification sets are under the Components menu.",
+    "url": "https://media.licdn.com/dms/image/v2/D4D12AQErsl2dOz28cg/article-inline_image-shrink_1500_2232/B4DaHH8Yc6JIAQ-/0/1794355857468?e=2147483647&v=beta&t=vGIzBPsCQbYspbMXYL1m3IS7W3ku2l04T0yziTR5g5s"
+  },
+  {
+    "article": "classification-rule-builder-retirement",
+    "name": "classification-welcome",
+    "after": "Open your classification set and select the Rules tab. The first time you access the new rule builder, Adobe displays a welcome screen with three options.",
+    "caption": "The welcome screen appears the first time you open the Rules tab in a classification set.",
+    "url": "https://media.licdn.com/dms/image/v2/D4D12AQFf7e-ULw8FTg/article-inline_image-shrink_400_744/B4DaHH8YeMGcAM-/0/1794355857716?e=2147483647&v=beta&t=XK_IzswT0OZX9wb6FGWMUGJ67v5m-7ppPfD8JNJk-WM"
+  },
+  {
+    "article": "classification-rule-builder-retirement",
+    "name": "classification-migration-confirmation",
+    "after": "Before you confirm, note that migration is permanent. Adobe's confirmation dialog states that the legacy rule interface will be disabled for this classification set, that all existing rules will be converted, and that the action cannot be undone.",
+    "caption": "The migration confirmation dialog. Read it carefully before you proceed.",
+    "url": "https://media.licdn.com/dms/image/v2/D4D12AQEmHJLfPBA2gw/article-inline_image-shrink_1000_1488/B4DaHH8YffJMAI-/0/1794355857801?e=2147483647&v=beta&t=C-cXQMre8I8I0tiKAR2xigfFH1pv_k2xfhs8mg3sn6E"
+  },
+  {
+    "article": "classification-rule-builder-retirement",
+    "name": "classification-rule-builder",
+    "after": "Once you're in the new experience, the workflow is straightforward.",
+    "caption": "The new rule builder, with functions on the left and overwrite settings, lookback and test options on the right.",
+    "url": "https://media.licdn.com/dms/image/v2/D4D12AQE3oFrfcLCNfg/article-inline_image-shrink_400_744/B4DaHH8YeoKYAM-/0/1794355857773?e=2147483647&v=beta&t=yIpT4WOfOeHhRFj41LMv3rj6eqE5UPboHPTKviPwKJs"
+  },
+  {
+    "article": "classification-rule-builder-retirement",
+    "name": "classification-regex-example",
+    "after": "Rules run sequentially from top to bottom, so pay close attention to order and dependencies.",
+    "caption": "A regular expression rule with four operations. The Test options panel holds the sample key.",
+    "url": "https://media.licdn.com/dms/image/v2/D4D12AQFhNNdJRjcFMg/article-inline_image-shrink_400_744/B4DaHH_FYNKEAM-/0/1794356566175?e=2147483647&v=beta&t=PtxndjV8vA-uDjSDXU6RGJ7AyIPm6CZjhELovGZceA4"
+  },
+  {
+    "article": "classification-rule-builder-retirement",
+    "name": "classification-test-results",
+    "after": "In this example, each part of the key landed in the expected classification: Discontinued, 120, 26194.99, and 1204 days. If a column is blank or shows an unexpected value, revise the rule and test again before you activate it.",
+    "caption": "Test results for Discontinued~120~26194.99~1204 days. Each column shows the value the rule produced.",
+    "url": "https://media.licdn.com/dms/image/v2/D4D12AQFqO4eZ7hLfwg/article-inline_image-shrink_400_744/B4DaHH_OSZKYAQ-/0/1794356602242?e=2147483647&v=beta&t=NX9U_05cO9pN4A6bZ5RKRitg5Vht6A8W-zNE9TBkaX8"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-inventory",
+    "after": "Failures are handled openly. If an endpoint fails, its count shows as <strong>Unavailable</strong> rather than zero, so a partial result never looks like a complete one.",
+    "caption": "CJA Intelligence inventory dashboard",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGH5HV0Qch2Tg/article-inline_image-shrink_1000_1488/B56aGykqo8LMAI-/0/1793997319450?e=2147483647&v=beta&t=LmWaRIEph8KjkIlgktVhhQFEaB6ST6LhpEADQdHAjX4"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-health",
+    "after": "These are review heuristics, not an official Adobe certification. The score can’t tell you whether reports are accurate or whether site events reach CJA, so it’s best used as a prompt for investigation.",
+    "caption": "CJA component health checks and findings",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQFBuKuTjLtzsA/article-inline_image-shrink_400_744/B56aGykztgJ4AM-/0/1793997356644?e=2147483647&v=beta&t=a8I44l1aTTXbKBIuGDMlMtwcwgd-kMd_8E0zqua5G4E"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-reports",
+    "after": "<strong>Dataview Reports</strong> lets you choose an existing data view, load its dimensions and metrics, and build a report with a date range, up to 20 metrics, optional segments, and row limits. Date dimensions produce trended reports, and other dimensions produce ranked ones. Each metric gets summary insights such as its total, top item and share, and period-over-period change. You can download the latest report as CSV, JSON, or Word, along with the exact request sent to CJA.",
+    "caption": "Data view reports with metrics and export options",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQG_U4FLUF7QYg/article-inline_image-shrink_400_744/B56aGyk7wZJ0AM-/0/1793997389619?e=2147483647&v=beta&t=Ha02DjxRruMBWtPzj5i6u9pajPeVcDpHvART9zNLC1c"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-compare",
+    "after": "<strong>Compare Data Views</strong> matches dimensions and metrics by exact component ID and shows what exists only in one view, what is shared, and which fields differ. Missing fields are distinguished from explicit nulls, so a difference is never a guess.",
+    "caption": "Comparing dimensions and metrics across data views",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQEBOchj6zglgg/article-inline_image-shrink_1000_1488/B56aGylAlvIUAM-/0/1793997409476?e=2147483647&v=beta&t=huosr9bYwHX4B7d1NoHoycGeVIQs39FDxNhpxafu8cY"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-metrics",
+    "after": "<strong>Metrics</strong> retrieves the full metric catalog for a data view, including every page of results, and lets you search and download it.",
+    "caption": "Searchable metrics catalog",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQE67D8HAbJ23Q/article-inline_image-shrink_400_744/B56aGylFIZLAAM-/0/1793997428182?e=2147483647&v=beta&t=s3Or-pj3xEFL9f2KA4wrBwuhMcCFQT99rOhKDYb5tsg"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-all-projects",
+    "after": "<strong>User Projects</strong> lists the company projects available to your credential, with a scope selector for all projects or only those shared with you. Each data view page also lists the projects that reference it.",
+    "caption": "All projects available to the credential",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQH7nxXLH7C6zA/article-inline_image-shrink_400_744/B56aGylQADJYAM-/0/1793997472694?e=2147483647&v=beta&t=sVa-chS19QqxWee2dO5YqhD1Fe-7o-5Ds32cjDQ5g7k"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-shared-projects",
+    "after": "<strong>User Projects</strong> lists the company projects available to your credential, with a scope selector for all projects or only those shared with you. Each data view page also lists the projects that reference it.",
+    "caption": "Projects shared with the credential",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQEFFpnhEf7tOA/article-inline_image-shrink_400_744/B56aGylT8ZKAAM-/0/1793997488553?e=2147483647&v=beta&t=s7a-4NQW1C6IeNwR3E0OZLnwNUTbPa36v2-5X6ilAYU"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-audit-logs",
+    "after": "<strong>Audit logs</strong> supports both simple filters and advanced nested AND/OR searches. Queries run only when you request them, so opening the page doesn’t pull logs.",
+    "caption": "Audit log filters and search",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGTTPJWNxRrfw/article-inline_image-shrink_400_744/B56aGylaOTG4AM-/0/1793997514422?e=2147483647&v=beta&t=nDRGtgdzzXY4XyV6Tludx7STNc8tZVZSwtpMBQuUpxY"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-audit-records",
+    "after": "<strong>Audit logs</strong> supports both simple filters and advanced nested AND/OR searches. Queries run only when you request them, so opening the page doesn’t pull logs.",
+    "caption": "Returned audit records",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQGtHDrfaCWX6g/article-inline_image-shrink_1000_1488/B56aGyleSNJoAI-/0/1793997530652?e=2147483647&v=beta&t=Ot6ZrliCc93DBeC45mOP2uN8b0NiKvpC6CuRDEna6Mg"
+  },
+  {
+    "article": "introducing-cja-intelligence",
+    "name": "cja-annotations",
+    "after": "Most of the app is read-only. The exception is <strong>Annotations</strong>, where you can create annotations and partially update existing ones. Since annotations change what appears in CJA reports, the app asks you to review the data view, date interval, and scope before saving. It does not offer a delete button.",
+    "caption": "Reviewing annotations before saving",
+    "url": "https://media.licdn.com/dms/image/v2/D5612AQEI97sNIinmqA/article-inline_image-shrink_1000_1488/B56aGylmcnHgAI-/0/1793997564472?e=2147483647&v=beta&t=YxPLFhmthagVxLhcflq1I8xkreD37WfGin9imHe-XlI"
+  }
+]

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence | The Sainath Revankar Journal</title>
+<meta name="description" content="A connected view of CJA inventory, component health, data views, reports, projects and governance workflows."><meta name="theme-color" content="#f4f1e7">
+<link rel="canonical" href="https://revankars.github.io/sainath-revankar-journal/journal/articles/introducing-cja-intelligence/"><meta property="og:url" content="https://revankars.github.io/sainath-revankar-journal/journal/articles/introducing-cja-intelligence/">
+<meta property="og:type" content="article"><meta property="og:title" content="Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence">
+<meta property="og:description" content="A connected view of CJA inventory, component health, data views, reports, projects and governance workflows."><meta property="article:published_time" content="2026-11-06">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence"><meta name="twitter:description" content="A connected view of CJA inventory, component health, data views, reports, projects and governance workflows.">
+<link rel="stylesheet" href="../../../assets/css/style.css"><link rel="stylesheet" href="../../../assets/css/components.css">
+<script type="application/ld+json" id="site-structured-data">{"@context":"https://schema.org","@type":"Article","headline":"Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence","description":"A connected view of CJA inventory, component health, data views, reports, projects and governance workflows.","author":{"@type":"Person","name":"Sainath Revankar"},"datePublished":"2026-11-06","mainEntityOfPage":"https://revankars.github.io/sainath-revankar-journal/journal/articles/introducing-cja-intelligence/","isBasedOn":"https://www.linkedin.com/pulse/seeing-your-customer-journey-analytics-setup-clearly-cja-revankar-g3sbc"}</script>
+</head><body>
+<div class="reading-progress" aria-hidden="true"></div><a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="container nav"><a class="brand" href="../../../index.html"><span class="brand-mark" aria-hidden="true">SR</span><span>The Sainath Revankar Journal</span></a><button class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">Menu</button><nav class="nav-links" id="primary-navigation" aria-label="Main navigation"><a href="../../../index.html">Home</a><a class="active" aria-current="page" href="../../index.html">Journal</a><a href="../../../about.html">About</a><a href="../../../certifications.html">Credentials</a><a href="../../../projects.html">Projects</a><a href="../../../contact.html">Contact</a></nav></div></header>
+<main id="main">
+<section class="page-heading article-heading"><div class="container">
+<a class="text-link" href="../../index.html">← Back to the journal</a><div class="eyebrow">Customer Journey Analytics</div>
+<h1>Seeing Your Customer Journey Analytics Setup Clearly: Introducing CJA Intelligence</h1><p>A connected view of CJA inventory, component health, data views, reports, projects and governance workflows.</p>
+<div class="article-byline">By Sainath Revankar · <time datetime="2026-11-06">November 6, 2026</time> · <span data-reading-time>4 min read</span></div>
+<p class="editorial-note">Originally published on <a class="text-link" href="https://www.linkedin.com/pulse/seeing-your-customer-journey-analytics-setup-clearly-cja-revankar-g3sbc" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>. Read the article here, with illustrations hosted locally.</p>
+</div></section>
+<section class="section section-white"><div class="container article-layout"><div>
+<article class="article-content"><p>Customer Journey Analytics (CJA) makes it possible to answer detailed questions about customer behavior, but its configuration can be hard to see at a glance. A single organization can have dozens of connections, data views, segments, and calculated metrics, plus projects and users spread across teams. Answering “Which data views point to a connection that no longer exists?” or “Which segments haven’t been touched in a year?” often means clicking through the interface one object at a time.</p>
+<p>I built <strong>CJA Intelligence</strong> to make that inventory easier to see, search, and explore. You can try it at <a href="http://adobe-cja-audit.onrender.com" target="_blank" rel="noopener noreferrer">adobe-cja-audit.onrender.com</a>.</p>
+<h2 id="section-1">One connected view of the organization</h2>
+<p>After you connect with Adobe OAuth Server-to-Server credentials, the app loads live results from every CJA API endpoint group: connections, data views, dimensions, metrics, calculated metrics, segments, date ranges, component tags and shares, projects, users, annotations, and audit logs. The dashboard shows a resource distribution bar and counts for each group. Each table is searchable and paginated, and every record can be inspected as JSON, fetched by ID, or downloaded.</p>
+<p>Failures are handled openly. If an endpoint fails, its count shows as <strong>Unavailable</strong> rather than zero, so a partial result never looks like a complete one.</p>
+<figure><img src="../../../assets/images/articles/cja-inventory.png" alt="CJA Intelligence inventory dashboard" width="1384" height="1000" loading="lazy"><figcaption>CJA Intelligence inventory dashboard</figcaption></figure>
+<h2 id="section-2">Health checks that explain themselves</h2>
+<p>The <strong>Workspace</strong> page scores the organization’s CJA component inventory from 0 to 100. The score starts at 100 and deducts points for each warning or critical finding, and each finding is listed with its deduction. In a real check, the app flagged 23 data view connection references that did not match a returned connection, a critical issue that cost 25 points. It also flagged segments that hadn’t been modified in more than a year and segments with no tags or descriptions.</p>
+<p>These are review heuristics, not an official Adobe certification. The score can’t tell you whether reports are accurate or whether site events reach CJA, so it’s best used as a prompt for investigation.</p>
+<figure><img src="../../../assets/images/articles/cja-health.png" alt="CJA component health checks and findings" width="713" height="400" loading="lazy"><figcaption>CJA component health checks and findings</figcaption></figure>
+<h2 id="section-3">Explore data views and reports</h2>
+<p><strong>Dataview Reports</strong> lets you choose an existing data view, load its dimensions and metrics, and build a report with a date range, up to 20 metrics, optional segments, and row limits. Date dimensions produce trended reports, and other dimensions produce ranked ones. Each metric gets summary insights such as its total, top item and share, and period-over-period change. You can download the latest report as CSV, JSON, or Word, along with the exact request sent to CJA.</p>
+<figure><img src="../../../assets/images/articles/cja-reports.png" alt="Data view reports with metrics and export options" width="670" height="400" loading="lazy"><figcaption>Data view reports with metrics and export options</figcaption></figure>
+<p><strong>Compare Data Views</strong> matches dimensions and metrics by exact component ID and shows what exists only in one view, what is shared, and which fields differ. Missing fields are distinguished from explicit nulls, so a difference is never a guess.</p>
+<figure><img src="../../../assets/images/articles/cja-compare.png" alt="Comparing dimensions and metrics across data views" width="1363" height="1000" loading="lazy"><figcaption>Comparing dimensions and metrics across data views</figcaption></figure>
+<p><strong>Metrics</strong> retrieves the full metric catalog for a data view, including every page of results, and lets you search and download it.</p>
+<figure><img src="../../../assets/images/articles/cja-metrics.png" alt="Searchable metrics catalog" width="710" height="400" loading="lazy"><figcaption>Searchable metrics catalog</figcaption></figure>
+<h2 id="section-4">Projects, users, and audit logs</h2>
+<p><strong>User Projects</strong> lists the company projects available to your credential, with a scope selector for all projects or only those shared with you. Each data view page also lists the projects that reference it.</p>
+<figure><img src="../../../assets/images/articles/cja-all-projects.png" alt="All projects available to the credential" width="636" height="400" loading="lazy"><figcaption>All projects available to the credential</figcaption></figure>
+<figure><img src="../../../assets/images/articles/cja-shared-projects.png" alt="Projects shared with the credential" width="744" height="387" loading="lazy"><figcaption>Projects shared with the credential</figcaption></figure>
+<p><strong>Audit logs</strong> supports both simple filters and advanced nested AND/OR searches. Queries run only when you request them, so opening the page doesn’t pull logs.</p>
+<figure><img src="../../../assets/images/articles/cja-audit-logs.png" alt="Audit log filters and search" width="674" height="400" loading="lazy"><figcaption>Audit log filters and search</figcaption></figure>
+<figure><img src="../../../assets/images/articles/cja-audit-records.png" alt="Returned audit records" width="1240" height="501" loading="lazy"><figcaption>Returned audit records</figcaption></figure>
+<h2 id="section-5">Changes are limited on purpose</h2>
+<p>Most of the app is read-only. The exception is <strong>Annotations</strong>, where you can create annotations and partially update existing ones. Since annotations change what appears in CJA reports, the app asks you to review the data view, date interval, and scope before saving. It does not offer a delete button.</p>
+<figure><img src="../../../assets/images/articles/cja-annotations.png" alt="Reviewing annotations before saving" width="1422" height="1000" loading="lazy"><figcaption>Reviewing annotations before saving</figcaption></figure>
+<h2 id="section-6">Privacy and session handling</h2>
+<p>Credentials, tokens, inventory, and reports stay in server memory for your browser session. The browser receives only an opaque, HTTP-only cookie. Logging out clears that session, and sessions expire after a period of inactivity. Tokens and credentials are never written to logs or files.</p>
+<p>Because the app contains live organization data, the same care applies to exports and screenshots. Downloaded reports can include user names, emails, and configuration details.</p>
+<h2 id="section-7">Who it’s for</h2>
+<p>If you manage CJA across several teams, run regular governance reviews, or need to understand why two data views behave differently, CJA Intelligence can give you a faster starting point. Connect with your own Adobe credentials to explore your organization, and review the code and documentation before using it with production data.</p>
+<p>Try it at <a href="http://adobe-cja-audit.onrender.com" target="_blank" rel="noopener noreferrer">adobe-cja-audit.onrender.com</a>, and I’d welcome feedback on what would make it more useful for your team.</p>
+<p>#CustomerJourneyAnalytics #AdobeAnalytics #CJA #DigitalAnalytics #MarTech #DataGovernance</p>
+</article>
+<div class="article-sharing"><button class="button" type="button" data-share>Share article</button><button class="button button-outline" type="button" data-copy-url>Copy article URL</button><a class="text-link" data-social-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Frevankars.github.io%2Fsainath-revankar-journal%2Fjournal%2Farticles%2Fintroducing-cja-intelligence%2F">Share on LinkedIn ↗</a><a class="text-link" data-social-share="x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Frevankars.github.io%2Fsainath-revankar-journal%2Fjournal%2Farticles%2Fintroducing-cja-intelligence%2F">Share on X ↗</a><span class="share-status" role="status" aria-live="polite"></span></div>
+<nav class="article-pagination" aria-label="Article navigation"><a href="../classification-rule-builder-retirement/index.html"><span>Previous article</span><strong>Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare</strong></a><a href="../../index.html"><span>All articles</span><strong>Journal index →</strong></a></nav>
+<section class="related-articles" aria-labelledby="related-heading"><h2 id="related-heading">Related articles</h2><p><a class="text-link" href="../understanding-merchandising-evars/index.html">Understanding Merchandising eVars: Product Syntax, Conversion Variable Syntax, Binding &amp; Allocation — From Adobe Analytics to CJA →</a></p>
+<p><a class="text-link" href="../classification-rule-builder-retirement/index.html">Adobe Analytics: The Legacy Classification Rule Builder Is Retiring. Here&#39;s How to Prepare →</a></p></section>
+</div><aside class="article-aside"><strong>In this article</strong><a href="#section-1">One connected view of the organization</a>
+<a href="#section-2">Health checks that explain themselves</a>
+<a href="#section-3">Explore data views and reports</a>
+<a href="#section-4">Projects, users, and audit logs</a>
+<a href="#section-5">Changes are limited on purpose</a>
+<a href="#section-6">Privacy and session handling</a>
+<a href="#section-7">Who it’s for</a></aside></div></section>
+</main><footer class="site-footer"><div class="container footer-inner"><div><div class="footer-brand">The Sainath Revankar Journal</div><div class="footer-note">Ideas, insights and experiences worth sharing.</div></div><div class="footer-links"><a href="../../index.html">Journal</a><a href="../../../about.html">About</a><a href="../../../projects.html">Projects</a><a href="../../../contact.html">Contact</a></div><div class="footer-note">© <span id="year">2026</span> Sainath Revankar</div></div></footer>
+<button class="back-to-top" type="button" aria-label="Back to top" hidden>↑</button>
+<script src="../../../assets/js/site-config.js"></script><script src="../../../assets/js/main.js"></script>
+</body></html>

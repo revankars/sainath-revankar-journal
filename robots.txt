@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://revankars.github.io/sainath-revankar-journal/sitemap.xml
