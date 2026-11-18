@@ -134,6 +134,63 @@ test("site search returns relevant results and handles empty matches", async () 
   assert.equal(results.children.length, 0);
 });
 
+test("the navigation search opens results in an on-page dialog", async () => {
+  const indexContext = { window: {} };
+  vm.runInNewContext(await read("assets/js/search-index.js"), indexContext);
+  const makeElement = () => ({
+    children: [],
+    listeners: {},
+    attributes: {},
+    value: "",
+    addEventListener(event, listener) { this.listeners[event] = listener; },
+    append(...children) { this.children.push(...children); },
+    replaceChildren(...children) { this.children = children; },
+    setAttribute(name, value) { this.attributes[name] = value; },
+    focus() { this.focused = true; },
+    showModal() { this.open = true; },
+    close() {
+      this.open = false;
+      this.listeners.close?.();
+    }
+  });
+  const searchLink = makeElement();
+  const elements = [];
+  const document = {
+    currentScript: { src: "https://example.test/site/assets/js/search.js" },
+    body: makeElement(),
+    querySelector(selector) {
+      return selector === '.nav-links a[href$="search.html"]' ? searchLink : null;
+    },
+    createElement() {
+      const element = makeElement();
+      elements.push(element);
+      return element;
+    }
+  };
+  const window = {
+    ...indexContext.window,
+    location: { href: "https://example.test/site/about.html", search: "" }
+  };
+  vm.runInNewContext(await read("assets/js/search.js"), { document, window, URL, URLSearchParams });
+
+  const dialog = document.body.children[0];
+  searchLink.listeners.click({ preventDefault() {} });
+  assert.equal(dialog.open, true);
+  const input = elements.find(element => element.id === "site-search-dialog-query");
+  const status = elements.find(element => element.className === "collection-status");
+  const results = elements.find(element => element.className === "site-search-results");
+  input.value = "event forwarding";
+  input.listeners.input();
+  assert.match(status.textContent, /result/);
+  assert.ok(results.children.length > 0);
+  const links = results.children.flatMap(item => item.children[1].children);
+  assert.ok(links.some(link => link.href.startsWith("https://example.test/site/")));
+  const closeButton = elements.find(element => element.className === "site-search-dialog-close");
+  closeButton.listeners.click();
+  assert.equal(dialog.open, false);
+  assert.equal(searchLink.focused, true);
+});
+
 test("journal cards use their locally hosted article covers", async () => {
   const journal = await read("journal/index.html");
   for (const article of articles) {

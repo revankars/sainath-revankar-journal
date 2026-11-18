@@ -1,9 +1,13 @@
 (() => {
-  const form = document.querySelector("#site-search-form");
-  const input = document.querySelector("#site-search-query");
-  const status = document.querySelector("#site-search-status");
-  const results = document.querySelector("#site-search-results");
   const entries = window.SITE_SEARCH_INDEX;
+  const pageForm = document.querySelector("#site-search-form");
+  const pageInput = document.querySelector("#site-search-query");
+  const pageStatus = document.querySelector("#site-search-status");
+  const pageResults = document.querySelector("#site-search-results");
+  const searchLink = document.querySelector('.nav-links a[href$="search.html"]');
+  const searchRoot = document.currentScript?.src
+    ? new URL("../../", document.currentScript.src)
+    : new URL("./", window.location.href);
 
   const normalize = value => String(value).normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -11,7 +15,7 @@
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 
-  const updateQueryString = () => {
+  const updateQueryString = input => {
     const url = new URL(window.location.href);
     const query = input.value.trim();
     if (query) url.searchParams.set("q", query);
@@ -27,7 +31,7 @@
     category.textContent = entry.type;
     const heading = document.createElement("h2");
     const link = document.createElement("a");
-    link.href = entry.url;
+    link.href = entry.external ? entry.url : new URL(entry.url, searchRoot).href;
     link.textContent = entry.title;
     if (entry.external) {
       link.target = "_blank";
@@ -47,8 +51,13 @@
     return item;
   };
 
-  const renderResults = () => {
+  const renderResults = (input, status, results) => {
     results.replaceChildren();
+    if (!Array.isArray(entries)) {
+      status.textContent = "Site search is unavailable. Please try again later.";
+      return;
+    }
+
     const query = input.value.trim();
     const terms = normalize(query).split(/\s+/).filter(Boolean);
     if (!terms.length) {
@@ -75,24 +84,91 @@
     matches.forEach(({ entry }) => results.append(makeResult(entry, terms)));
   };
 
-  input.value = new URLSearchParams(window.location.search).get("q") || "";
-  form.addEventListener("submit", event => {
-    event.preventDefault();
-    updateQueryString();
-    renderResults();
-  });
-  input.addEventListener("input", () => {
-    updateQueryString();
-    renderResults();
-  });
-  window.addEventListener("popstate", () => {
-    input.value = new URLSearchParams(window.location.search).get("q") || "";
-    renderResults();
-  });
+  const bindForm = (form, input, status, results, updateUrl = false) => {
+    if (!form || !input || !status || !results) return;
+    const update = () => {
+      if (updateUrl) updateQueryString(input);
+      renderResults(input, status, results);
+    };
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      update();
+    });
+    input.addEventListener("input", update);
+    update();
+  };
 
-  if (!Array.isArray(entries)) {
-    status.textContent = "Site search is unavailable. Please try again later.";
-    return;
+  if (pageInput) pageInput.value = new URLSearchParams(window.location.search).get("q") || "";
+  bindForm(pageForm, pageInput, pageStatus, pageResults, true);
+  if (pageForm) {
+    window.addEventListener("popstate", () => {
+      pageInput.value = new URLSearchParams(window.location.search).get("q") || "";
+      renderResults(pageInput, pageStatus, pageResults);
+    });
   }
-  renderResults();
+
+  if (!searchLink) return;
+
+  const dialog = document.createElement("dialog");
+  dialog.className = "site-search-dialog";
+  dialog.setAttribute("aria-labelledby", "site-search-dialog-title");
+  const panel = document.createElement("div");
+  panel.className = "site-search-dialog-panel";
+  const header = document.createElement("div");
+  header.className = "site-search-dialog-header";
+  const title = document.createElement("h2");
+  title.id = "site-search-dialog-title";
+  title.textContent = "Search the website";
+  const closeButton = document.createElement("button");
+  closeButton.className = "site-search-dialog-close";
+  closeButton.type = "button";
+  closeButton.textContent = "Close";
+  closeButton.setAttribute("aria-label", "Close site search");
+  header.append(title, closeButton);
+
+  const dialogForm = document.createElement("form");
+  dialogForm.className = "site-search-form";
+  dialogForm.setAttribute("role", "search");
+  const label = document.createElement("label");
+  label.htmlFor = "site-search-dialog-query";
+  label.textContent = "Search the website";
+  const row = document.createElement("div");
+  row.className = "site-search-row";
+  const dialogInput = document.createElement("input");
+  dialogInput.id = "site-search-dialog-query";
+  dialogInput.name = "q";
+  dialogInput.type = "search";
+  dialogInput.placeholder = "Try “event forwarding” or “Customer Journey Analytics”";
+  dialogInput.autocomplete = "off";
+  const submitButton = document.createElement("button");
+  submitButton.className = "button";
+  submitButton.type = "submit";
+  submitButton.textContent = "Search";
+  row.append(dialogInput, submitButton);
+  dialogForm.append(label, row);
+
+  const dialogStatus = document.createElement("p");
+  dialogStatus.className = "collection-status";
+  dialogStatus.setAttribute("role", "status");
+  dialogStatus.setAttribute("aria-live", "polite");
+  const dialogResults = document.createElement("ol");
+  dialogResults.className = "site-search-results";
+  panel.append(header, dialogForm, dialogStatus, dialogResults);
+  dialog.append(panel);
+  document.body.append(dialog);
+  bindForm(dialogForm, dialogInput, dialogStatus, dialogResults);
+
+  dialogInput.value = pageInput?.value || new URLSearchParams(window.location.search).get("q") || "";
+  searchLink.addEventListener("click", event => {
+    event.preventDefault();
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+    renderResults(dialogInput, dialogStatus, dialogResults);
+    dialogInput.focus();
+  });
+  closeButton.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", event => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener("close", () => searchLink.focus());
 })();

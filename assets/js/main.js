@@ -1,4 +1,5 @@
 (() => {
+  const mainScriptUrl = document.currentScript?.src;
   const config = window.SITE_CONFIG || {};
   const menuToggle = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".nav-links");
@@ -295,5 +296,17 @@
         sameAs: [config.linkedinUrl, config.githubUrl].filter(Boolean)
       })
     });
+  }
+
+  const searchLink = document.querySelector('.nav-links a[href$="search.html"]');
+  if (searchLink && !document.querySelector("#site-search-form") && mainScriptUrl) {
+    const loadSearchScript = (filename, onload) => {
+      const script = document.createElement("script");
+      script.src = new URL(filename, mainScriptUrl).href;
+      if (onload) script.onload = onload;
+      script.onerror = () => console.error(`Unable to load site search ${filename}.`);
+      document.body.append(script);
+    };
+    loadSearchScript("search-index.js", () => loadSearchScript("search.js"));
   }
 })();
