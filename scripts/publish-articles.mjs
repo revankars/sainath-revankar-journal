@@ -5,6 +5,24 @@ const root = new URL("../", import.meta.url);
 const read = path => readFile(new URL(path, root), "utf8");
 const escape = text => String(text).replace(/[&<>"']/g, character =>
   ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+const htmlToText = html => html
+  .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, " ")
+  .replace(/<!--[\s\S]*?-->/g, " ")
+  .replace(/<[^>]+>/g, " ")
+  .replace(/&nbsp;/gi, " ")
+  .replace(/&amp;/gi, "&")
+  .replace(/&quot;/gi, '"')
+  .replace(/&apos;|&#39;/gi, "'")
+  .replace(/&lt;/gi, "<")
+  .replace(/&gt;/gi, ">")
+  .replace(/&mdash;/gi, "—")
+  .replace(/&ndash;/gi, "–")
+  .replace(/&rsquo;|&lsquo;/gi, "'")
+  .replace(/&rdquo;|&ldquo;/gi, '"')
+  .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+  .replace(/&#x([\da-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+  .replace(/\s+/g, " ")
+  .trim();
 const articles = JSON.parse(await read("data/articles.json"));
 const linkedArticles = JSON.parse(await read("data/linked-articles.json"));
 const images = JSON.parse(await read("data/article-images.json"));
@@ -24,7 +42,7 @@ const articleLink = (article, prefix) => `${prefix}${article.slug}/index.html`;
 const card = (article, prefix, featured = false) => {
   const link = article.linked ? escape(article.source) : articleLink(article, prefix);
   const externalAttributes = article.linked ? ' target="_blank" rel="noopener noreferrer"' : "";
-  const linkText = article.linked ? "Read on LinkedIn ↗" : "Read on this website →";
+  const linkText = article.linked ? `Read on ${escape(article.sourceLabel || "LinkedIn")} ↗` : "Read on this website →";
   const imagePrefix = featured ? "" : "../";
   const visual = article.cover
     ? `<div class="${featured ? "feature-visual" : "visual"} cover-visual${article.coverFit === "contain" ? " cover-contain" : ""}" aria-hidden="true"><img src="${imagePrefix}assets/images/covers/${escape(article.cover)}" alt="" width="1280" height="719" loading="lazy"></div>`
@@ -42,7 +60,10 @@ for (const article of linkedArticles) {
   if (article.cover !== null && !/^[a-z0-9]+(?:-[a-z0-9]+)*\.jpg$/.test(article.cover)) throw new Error(`Invalid cover: ${article.title}`);
   if (article.coverFit !== undefined && article.coverFit !== "contain") throw new Error(`Invalid cover fit: ${article.title}`);
   if (article.date !== null && !/^\d{4}-\d{2}-\d{2}$/.test(article.date)) throw new Error(`Invalid date: ${article.title}`);
-  if (new URL(article.source).origin !== "https://www.linkedin.com") throw new Error(`Invalid article source: ${article.title}`);
+  const source = new URL(article.source);
+  if (source.protocol !== "https:" || !["www.linkedin.com", "experienceleague.adobe.com", "www.merkle.com"].includes(source.hostname)) {
+    throw new Error(`Invalid article source: ${article.title}`);
+  }
   if (article.cover !== null) await readFile(new URL(`assets/images/covers/${article.cover}`, root));
 }
 for (const [index, article] of articles.entries()) {
@@ -129,6 +150,64 @@ const journalOutput = replaceSection(journalWithCount, "published-articles",
   `<div class="journal-grid">\n${journalArticles.map(article => card(article, "articles/")).join("\n")}\n</div>`);
 const homeOutput = replaceSection(await read("index.html"), "featured-articles",
   `<div class="feature-grid">\n${journalArticles.filter(article => article.date).slice(0, 2).map(article => card(article, "journal/articles/", true)).join("\n")}\n</div>`);
+const searchIndex = [];
+const addSearchEntry = entry => searchIndex.push({
+  title: entry.title,
+  url: entry.url,
+  type: entry.type,
+  content: entry.content,
+  ...(entry.external ? { external: true } : {})
+});
+const sitePages = [
+  { path: "index.html", title: "Home", type: "Home page", html: homeOutput },
+  { path: "about.html", title: "About", type: "About page" },
+  { path: "certifications.html", title: "Credentials", type: "Credentials page" },
+  { path: "projects.html", title: "Projects", type: "Projects page" },
+  { path: "contact.html", title: "Contact", type: "Contact page" }
+];
+for (const page of sitePages) {
+  const html = page.html || await read(page.path);
+  const main = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1];
+  if (!main) throw new Error(`Main content not found for search indexing: ${page.path}`);
+  const pageContent = page.path === "projects.html"
+    ? main.replace(/<article class="project"[\s\S]*?<\/article>/g, " ")
+    : main;
+  addSearchEntry({
+    title: page.title,
+    url: page.path,
+    type: page.type,
+    content: htmlToText(pageContent)
+  });
+}
+const projectHtml = await read("projects.html");
+for (const match of projectHtml.matchAll(/<article class="project"(?: id="([^"]+)")?[^>]*>([\s\S]*?)<\/article>/g)) {
+  const title = htmlToText(match[2].match(/<h[23]\b[^>]*>([\s\S]*?)<\/h[23]>/i)?.[1] || "");
+  if (!title) throw new Error("Project card is missing a title in the search index.");
+  addSearchEntry({
+    title,
+    url: `projects.html${match[1] ? `#${match[1]}` : ""}`,
+    type: "Project",
+    content: htmlToText(match[2])
+  });
+}
+for (const article of articles) {
+  addSearchEntry({
+    title: article.title,
+    url: `journal/articles/${article.slug}/index.html`,
+    type: `${article.category} article`,
+    content: [article.description, article.category, article.date, htmlToText(await read(`data/articles/${article.slug}.html`))]
+      .filter(Boolean).join(" ")
+  });
+}
+for (const article of linkedArticles) {
+  addSearchEntry({
+    title: article.title,
+    url: article.source,
+    type: `${article.sourceLabel || "LinkedIn"} article`,
+    content: [article.description, article.category, article.date].filter(Boolean).join(" "),
+    external: true
+  });
+}
 const corePaths = ["", "about.html", "journal/", "certifications.html", "projects.html", "contact.html"];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -140,5 +219,7 @@ for (const output of pageOutputs) {
 }
 await writeFile(new URL("journal/index.html", root), journalOutput);
 await writeFile(new URL("index.html", root), homeOutput);
+const searchIndexScript = `window.SITE_SEARCH_INDEX = ${JSON.stringify(searchIndex).replaceAll("<", "\\u003c")};\n`;
+await writeFile(new URL("assets/js/search-index.js", root), searchIndexScript);
 await writeFile(new URL("sitemap.xml", root), sitemap);
-console.log(`Published ${articles.length} static articles and ${linkedArticles.length} linked articles, journal cards, home features and sitemap.`);
+console.log(`Published ${articles.length} static articles and ${linkedArticles.length} linked articles, journal cards, home features, search index and sitemap.`);

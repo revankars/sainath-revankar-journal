@@ -10,7 +10,7 @@ const articles = JSON.parse(await read("data/articles.json"));
 const linkedArticles = JSON.parse(await read("data/linked-articles.json"));
 const images = JSON.parse(await read("data/article-images.json"));
 const articlePaths = articles.map(article => `journal/articles/${article.slug}/index.html`);
-const generatedPaths = ["index.html", "journal/index.html", "sitemap.xml", ...articlePaths];
+const generatedPaths = ["index.html", "journal/index.html", "search.html", "assets/js/search-index.js", "sitemap.xml", ...articlePaths];
 
 test("publishing is repeatable and retains the complete article bodies and dates", async () => {
   const before = await Promise.all(generatedPaths.map(read));
@@ -39,8 +39,19 @@ test("publishing is repeatable and retains the complete article bodies and dates
 
 test("published navigation, table of contents and assets resolve at a project prefix", async () => {
   const prefix = "/example-project/";
-  for (const path of ["index.html", "about.html", "journal/index.html", "projects.html", "certifications.html", ...articlePaths]) {
+  for (const path of [
+    "index.html", "about.html", "journal/index.html", "projects.html", "certifications.html",
+    "contact.html", "404.html", "search.html",
+    "journal/articles/designing-connected-martech/index.html",
+    "journal/articles/experience-data-foundations/index.html",
+    "journal/articles/from-measurement-to-journey-insight/index.html",
+    ...articlePaths
+  ]) {
     const html = await read(path);
+    const searchHref = path.startsWith("journal/articles/")
+      ? "../../../search.html"
+      : path === "journal/index.html" ? "../search.html" : "search.html";
+    assert.ok(html.includes(`href="${searchHref}">Search</a>`), `${path}: missing site-wide search link`);
     const base = new URL(`${prefix}${path}`, "https://example.test");
     for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
       const target = new URL(match[1].replaceAll("&amp;", "&"), base);
@@ -56,6 +67,71 @@ test("published navigation, table of contents and assets resolve at a project pr
       }
     }
   }
+});
+
+test("site search index covers articles, projects, credentials and internal destinations", async () => {
+  const context = { window: {} };
+  vm.runInNewContext(await read("assets/js/search-index.js"), context);
+  const searchIndex = context.window.SITE_SEARCH_INDEX;
+  assert.ok(Array.isArray(searchIndex));
+  assert.ok(searchIndex.some(entry => entry.title === "How to design event forwarding rules that scale"
+    && entry.external && entry.url.startsWith("https://experienceleague.adobe.com/")));
+  assert.ok(searchIndex.some(entry => entry.title === "Adobe Web SDK: Transforming Customer Experiences at Enterprise Scale"
+    && entry.external && entry.url.startsWith("https://www.merkle.com/")));
+  assert.ok(searchIndex.some(entry => entry.title === "Marketo Lead Uploader" && entry.url === "projects.html#marketo-lead-uploader"));
+  assert.ok(searchIndex.some(entry => entry.type === "Credentials page"
+    && entry.content.includes("Adobe Certified Master - Adobe Analytics Architect")));
+  assert.ok(searchIndex.some(entry => entry.title.startsWith("Understanding Merchandising eVars")
+    && entry.content.includes("binding event")));
+  for (const entry of searchIndex.filter(item => !item.external)) {
+    const target = new URL(entry.url, "https://example.test/");
+    const path = decodeURIComponent(target.pathname.slice(1));
+    const html = await read(path);
+    if (target.hash) assert.ok(html.includes(`id="${decodeURIComponent(target.hash.slice(1))}"`), entry.url);
+  }
+});
+
+test("site search returns relevant results and handles empty matches", async () => {
+  const indexContext = { window: {} };
+  vm.runInNewContext(await read("assets/js/search-index.js"), indexContext);
+  const elements = new Map();
+  const makeElement = () => ({
+    children: [],
+    listeners: {},
+    addEventListener(event, listener) { this.listeners[event] = listener; },
+    replaceChildren(...children) { this.children = children; },
+    append(...children) { this.children.push(...children); }
+  });
+  for (const selector of ["#site-search-form", "#site-search-query", "#site-search-status", "#site-search-results"]) {
+    elements.set(selector, makeElement());
+  }
+  const document = {
+    querySelector(selector) { return elements.get(selector); },
+    createElement() { return makeElement(); }
+  };
+  const window = {
+    ...indexContext.window,
+    location: { href: "https://example.test/search.html?q=binding+event", search: "?q=binding+event" },
+    history: {
+      replaceState(_state, _title, url) {
+        this.url = String(url);
+        window.location.href = this.url;
+        window.location.search = new URL(this.url).search;
+      }
+    },
+    addEventListener() {}
+  };
+  vm.runInNewContext(await read("assets/js/search.js"), { document, window, URL, URLSearchParams });
+  const input = elements.get("#site-search-query");
+  const status = elements.get("#site-search-status");
+  const results = elements.get("#site-search-results");
+  assert.ok(status.textContent.includes("result"));
+  assert.ok(results.children.some(item => item.children.some(child =>
+    child.children?.some(link => link.textContent.startsWith("Understanding Merchandising eVars")))));
+  input.value = "no matching content phrase";
+  input.listeners.input();
+  assert.match(status.textContent, /No results/);
+  assert.equal(results.children.length, 0);
 });
 
 test("journal cards use their locally hosted article covers", async () => {
@@ -143,9 +219,10 @@ test("linked articles appear in chronological order with their covers and origin
     "next-best-action-adobes-journey-orchestration-sainath-revankar",
     "adobe-target-recommendations-using-apriori-algorithm-sainath-revankar"
   ];
-  assert.equal(cards.length, articles.length + expectedSources.length);
+  assert.equal(cards.length, articles.length + linkedArticles.length);
   assert.ok(journal.includes(`<p class="collection-count" id="journal-total">${cards.length} articles in total</p>`));
-  assert.deepEqual(linkedArticles.map(article => new URL(article.source).pathname.split("/")[2]).sort(), expectedSources.sort());
+  assert.deepEqual(linkedArticles.filter(article => new URL(article.source).hostname === "www.linkedin.com")
+    .map(article => new URL(article.source).pathname.split("/")[2]).sort(), expectedSources.sort());
   const dates = cards.map(card => card.match(/datetime="([^"]+)"/)?.[1] || "");
   assert.deepEqual(dates, [...dates].sort().reverse());
   for (const article of linkedArticles) {
@@ -163,8 +240,39 @@ test("linked articles appear in chronological order with their covers and origin
     }
     assert.ok(card.includes(`data-category="${article.filters.join(" ")}"`));
     assert.ok(card.includes('target="_blank" rel="noopener noreferrer"'));
-    assert.ok(card.includes("Read on LinkedIn"));
+    assert.ok(card.includes(`Read on ${article.sourceLabel || "LinkedIn"} ↗`));
   }
+});
+
+test("external Adobe and Merkle articles appear with their original publication labels", async () => {
+  const journal = await read("journal/index.html");
+  for (const [source, label, date] of [
+    ["https://experienceleague.adobe.com/en/perspectives/how-to-design-event-forwarding-rules-that-scale", "Adobe Experience League", "2026-11-11"],
+    ["https://www.merkle.com/en/merkle-now/articles-blogs/2025/adobe-web-sdk-transforming-customer-experiences-enterprise-scale.html", "Merkle", "2025-07-25"]
+  ]) {
+    const card = journal.match(new RegExp(`<article class="article-card"[\\s\\S]*?href="${source.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[\\s\\S]*?<\\/article>`))?.[0];
+    assert.ok(card, source);
+    assert.ok(card.includes(`datetime="${date}"`), source);
+    assert.ok(card.includes(`Read on ${label} ↗`), source);
+    assert.ok(card.includes('target="_blank" rel="noopener noreferrer"'), source);
+  }
+});
+
+test("Adobe User Group speaking details link to the event and Teams webinar", async () => {
+  const html = await read("certifications.html");
+  assert.ok(html.includes("Insider Tips &amp; Considerations for Adobe Event Forwarding"));
+  assert.ok(html.includes('href="https://usergroups.adobe.com/events/details/adobe-user-groups-experience-platform-apps-utah-chapter-presents-insider-tips-amp-considerations-for-adobe-event-forwarding/"'));
+  assert.ok(html.includes('href="https://events.teams.microsoft.com/event/dc7962d8-1935-4958-a29d-350c65d37e10@6e8992ec-76d5-4ea5-8eae-b0c5e558749a"'));
+});
+
+test("About page highlights the speaking engagement near the top", async () => {
+  const html = await read("about.html");
+  const highlight = html.indexOf('aria-labelledby="featured-speaking"');
+  const profile = html.indexOf('class="container about-grid"');
+  assert.ok(highlight >= 0 && highlight < profile);
+  assert.ok(html.includes('id="featured-speaking">Insider Tips &amp; Considerations for Adobe Event Forwarding</h2>'));
+  assert.ok(html.includes('>Webinar event ↗</a>'));
+  assert.ok(html.includes('>Adobe User Group details ↗</a>'));
 });
 
 test("previously unavailable article details and covers appear in the journal", async () => {
@@ -217,6 +325,14 @@ test("projects show matching covers and the Marketo project links", async () => 
     }
   }
   assert.ok(html.includes('src="assets/images/covers/analytics-audit.jpg"'));
+});
+
+test("home credentials card uses its local illustration", async () => {
+  const home = await read("index.html");
+  const illustration = await read("assets/images/covers/certifications-honors.svg");
+  assert.ok(home.includes('src="assets/images/covers/certifications-honors.svg"'));
+  assert.ok(home.includes('<div class="meta">Certifications · Honors</div>'));
+  assert.ok(illustration.includes('<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="719"'));
 });
 
 test("contact page configures the Medium profile link", async () => {
@@ -334,13 +450,13 @@ test("journal and project search, topic filters and pagination work with the pub
     document, URL, window: { location: { href: "https://example.test/journal/" }, matchMedia: () => ({ matches: false }) }
   });
   const visible = collection => collection.filter(card => !card.hidden).length;
-  assert.equal(journalTotal.textContent, "50 articles in total");
+  assert.equal(journalTotal.textContent, `${articles.length + linkedArticles.length} articles in total`);
   assert.equal(projectTotal.textContent, "7 projects in total");
   assert.equal(visible(cards), 6);
   assert.equal(journalPagination.children.length, 11);
   journalPagination.children.find(button => button.textContent === "2").click();
   assert.equal(visible(cards), 6);
-  assert.equal(journalResults.textContent, "Showing 7–12 of 50 articles");
+  assert.equal(journalResults.textContent, `Showing 7–12 of ${articles.length + linkedArticles.length} articles`);
   filters[1].click();
   assert.equal(visible(cards), 6);
   assert.equal(journalResults.textContent, "Showing 1–6 of 25 articles");
@@ -359,7 +475,7 @@ test("journal and project search, topic filters and pagination work with the pub
   filters[4].click();
   assert.equal(visible(cards), 0);
   assert.equal(journalEmpty.hidden, false);
-  assert.equal(journalTotal.textContent, "50 articles in total");
+  assert.equal(journalTotal.textContent, `${articles.length + linkedArticles.length} articles in total`);
   search.value = "Identity, Edge, and Personalization";
   search.input();
   assert.equal(visible(cards), 1);

@@ -1,5 +1,25 @@
 [
   {
+    "title": "How to design event forwarding rules that scale",
+    "description": "A practical architecture for maintainable Adobe Experience Platform Event Forwarding, from payload preparation to explicit, scalable routing rules.",
+    "category": "Adobe Experience Platform",
+    "filters": ["aep", "architecture", "data"],
+    "date": "2026-11-11",
+    "source": "https://experienceleague.adobe.com/en/perspectives/how-to-design-event-forwarding-rules-that-scale",
+    "sourceLabel": "Adobe Experience League",
+    "cover": null
+  },
+  {
+    "title": "Adobe Web SDK: Transforming Customer Experiences at Enterprise Scale",
+    "description": "A strategic overview of Adobe Web SDK adoption, including performance, privacy, migration planning and enterprise-scale personalization.",
+    "category": "Adobe Web SDK",
+    "filters": ["aep", "architecture", "personalization"],
+    "date": "2025-07-25",
+    "source": "https://www.merkle.com/en/merkle-now/articles-blogs/2025/adobe-web-sdk-transforming-customer-experiences-enterprise-scale.html",
+    "sourceLabel": "Merkle",
+    "cover": null
+  },
+  {
     "title": "When the Campaign Disappears: Bringing Lost Attribution Back to Your Leads in Marketo",
     "description": "A controlled Marketo Lead Uploader workflow for restoring campaign data to existing leads and supporting attribution reporting.",
     "category": "Marketo & Attribution",

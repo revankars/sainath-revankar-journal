@@ -22,7 +22,7 @@ All local links and assets are relative, including nested article pages, so the 
 - **About and profile:** Edit `about.html` for the biography, education and personal highlights. The supplied profile photo is in `assets/images/sainath-revankar.jpg`; replace it only with an approved photo. Keep profile, education and career details accurate.
 - **Projects:** Edit the project cards in `projects.html` and update its displayed total as a fallback for visitors without JavaScript. Matching article covers are stored in `assets/images/covers/`; include a repository, demo or image only when it is available and verified.
 - **Certifications:** The cards combine the public LinkedIn profile with owner-supplied credential details. Keep names, issuers, issue/expiry dates, IDs and verification links aligned with current records. When no credential-specific link is available, link to the LinkedIn certifications list and label it accordingly. Mark expired credentials clearly and update an existing credential rather than duplicating it.
-- **Articles:** Maintain onsite articles in `data/articles.json` and their trusted HTML bodies in `data/articles/`. Maintain LinkedIn-only entries in `data/linked-articles.json`. Run the optional maintenance command below to regenerate static pages, journal cards, the journal total, home features and sitemap. LinkedIn entries without a date or approved cover use `null` for that field and display an unavailable date or placeholder artwork.
+- **Articles:** Maintain onsite articles in `data/articles.json` and their trusted HTML bodies in `data/articles/`. Maintain externally published entries in `data/linked-articles.json`; supported publishers are LinkedIn, Adobe Experience League and Merkle. Run the optional maintenance command below to regenerate static pages, journal cards, the journal total, home features, the site search index and sitemap. External entries without an approved cover use `null` and display placeholder artwork.
 - **Article details:** Keep the title, description, category, filters, original publication date, source URL and local cover filename in the catalog. Generated pages include static metadata and structured data; the shared script preserves publication dates when updating the configured canonical URL.
 - **LinkedIn covers:** Set `coverFit` to `contain` when an image needs to be shown without cropping, and record applicable attribution in `coverCredit`. Only use covers approved for this website.
 - **Images:** Add optimized images to `assets/images/`, use descriptive `alt` text, explicit width and height, and `loading="lazy"` for non-critical images.
@@ -30,21 +30,21 @@ All local links and assets are relative, including nested article pages, so the 
 
 ## Journal behavior
 
-Onsite articles each have an independent static page; LinkedIn-only entries open their original publications. The journal index provides client-side topic filters, text search and pagination with six articles per page. The projects page provides text search and pagination with six projects per page. Onsite article pages include estimated reading time, a scroll progress indicator, sharing/copy-link controls, related navigation and a reading layout. No journal content is fetched from a database or API.
+Onsite articles each have an independent static page; external publication entries open their original publications and identify the publisher. The journal index provides client-side topic filters, text search and pagination with six articles per page. The projects page provides text search and pagination with six projects per page. A site-wide Search link is available in every page navigation; it searches onsite article text, external article metadata, project descriptions, credentials and page content. Its index is generated as a local script so search works without a backend or data request. Onsite article pages include estimated reading time, a scroll progress indicator, sharing/copy-link controls, related navigation and a reading layout.
 
 The home page features the two newest dated journal entries across both catalogs. Entries without a known publication date remain in the journal but are not featured on the home page.
 
 ## Updating published articles
 
-The three onsite articles are readable here without LinkedIn sign-in. Their original diagrams and screenshots are stored locally. Additional journal cards link directly to their LinkedIn publications and are labeled accordingly; LinkedIn may require sign-in.
+The three onsite articles are readable here without LinkedIn sign-in. Their original diagrams and screenshots are stored locally. Additional journal cards link directly to the original external publications and are labeled by publisher; some publishers may require sign-in.
 
-After editing either catalog or article body sources, run:
+After editing either catalog, article bodies, or searchable page content, run:
 
 ```sh
 node scripts/publish-articles.mjs
 ```
 
-Node is only needed by maintainers for this regeneration command. Deploy the generated HTML, sitemap and assets along with the source files; visitors and GitHub Pages need no Node runtime or custom build configuration. Do not edit generated article pages or the marked card sections directly because regeneration replaces them.
+Node is only needed by maintainers for this regeneration command. Deploy the generated HTML, sitemap and assets along with the source files; visitors and GitHub Pages need no Node runtime or custom build configuration. Do not edit generated article pages, `assets/js/search-index.js` or the marked card sections directly because regeneration replaces them.
 
 Image provenance, captions and insertion anchors live in `data/article-images.json`. Each anchor must match one paragraph in its article body. Merchandising figures omit the `article` field; other figures specify the article slug. If adding or refreshing the original images, run `node scripts/download-article-images.mjs` before publishing. The downloader validates PNG files and fails explicitly if a source is unavailable. Rendering the journal and onsite pages does not contact LinkedIn.
 

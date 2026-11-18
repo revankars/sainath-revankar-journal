@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="719" viewBox="0 0 1280 719" fill="none">
+  <rect width="1280" height="719" fill="#EDF1DF"/>
+  <circle cx="184" cy="142" r="248" fill="#DCE8B6"/>
+  <circle cx="1123" cy="623" r="285" fill="#DCE8B6"/>
+  <path d="M92 595c89-87 162-115 260-104" stroke="#718064" stroke-width="3" opacity=".55"/>
+  <path d="M100 640c86-62 149-79 229-75" stroke="#718064" stroke-width="3" opacity=".35"/>
+  <rect x="355" y="92" width="570" height="535" rx="18" fill="#FBFAF6" stroke="#D9DDCE" stroke-width="3"/>
+  <rect x="390" y="126" width="500" height="8" rx="4" fill="#254D36"/>
+  <text x="640" y="206" fill="#596A50" font-family="Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="5" text-anchor="middle">CERTIFICATIONS</text>
+  <path d="M475 252h330" stroke="#D9DDCE" stroke-width="3"/>
+  <path d="M470 302h340" stroke="#254D36" stroke-width="8" stroke-linecap="round"/>
+  <path d="M505 330h270" stroke="#254D36" stroke-width="8" stroke-linecap="round" opacity=".72"/>
+  <path d="M535 358h210" stroke="#254D36" stroke-width="8" stroke-linecap="round" opacity=".48"/>
+  <circle cx="640" cy="470" r="73" fill="#EDF1DF" stroke="#254D36" stroke-width="4"/>
+  <circle cx="640" cy="470" r="56" fill="#E7D66B"/>
+  <path d="m640 428 12 27 30 3-23 19 7 30-26-16-26 16 7-30-23-19 30-3 12-27Z" fill="#254D36"/>
+  <path d="m600 528-16 71 56-30 56 30-16-71" fill="#718064"/>
+  <path d="M454 580h128M698 580h128" stroke="#D9DDCE" stroke-width="3" stroke-linecap="round"/>
+  <text x="640" y="665" fill="#254D36" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4" text-anchor="middle">EXPERTISE · RECOGNITION</text>
+</svg>
