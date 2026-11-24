@@ -162,6 +162,7 @@ const sitePages = [
   { path: "index.html", title: "Home", type: "Home page", html: homeOutput },
   { path: "about.html", title: "About", type: "About page" },
   { path: "certifications.html", title: "Credentials", type: "Credentials page" },
+  { path: "testimonials.html", title: "Testimonials", type: "Testimonials page" },
   { path: "projects.html", title: "Projects", type: "Projects page" },
   { path: "contact.html", title: "Contact", type: "Contact page" }
 ];
@@ -208,7 +209,7 @@ for (const article of linkedArticles) {
     external: true
   });
 }
-const corePaths = ["", "about.html", "journal/", "certifications.html", "projects.html", "contact.html"];
+const corePaths = ["", "about.html", "journal/", "certifications.html", "testimonials.html", "projects.html", "contact.html"];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${[...corePaths, ...articles.map(article => `journal/articles/${article.slug}/`)].map(path => `  <url><loc>${escape(`${siteUrl}/${path}`)}</loc></url>`).join("\n")}

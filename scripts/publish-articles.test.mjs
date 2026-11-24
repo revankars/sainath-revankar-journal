@@ -10,7 +10,7 @@ const articles = JSON.parse(await read("data/articles.json"));
 const linkedArticles = JSON.parse(await read("data/linked-articles.json"));
 const images = JSON.parse(await read("data/article-images.json"));
 const articlePaths = articles.map(article => `journal/articles/${article.slug}/index.html`);
-const generatedPaths = ["index.html", "journal/index.html", "search.html", "assets/js/search-index.js", "sitemap.xml", ...articlePaths];
+const generatedPaths = ["index.html", "journal/index.html", "search.html", "testimonials.html", "assets/js/search-index.js", "sitemap.xml", ...articlePaths];
 
 test("publishing is repeatable and retains the complete article bodies and dates", async () => {
   const before = await Promise.all(generatedPaths.map(read));
@@ -41,7 +41,7 @@ test("published navigation, table of contents and assets resolve at a project pr
   const prefix = "/example-project/";
   for (const path of [
     "index.html", "about.html", "journal/index.html", "projects.html", "certifications.html",
-    "contact.html", "404.html", "search.html",
+    "contact.html", "404.html", "search.html", "testimonials.html",
     "journal/articles/designing-connected-martech/index.html",
     "journal/articles/experience-data-foundations/index.html",
     "journal/articles/from-measurement-to-journey-insight/index.html",
@@ -52,6 +52,10 @@ test("published navigation, table of contents and assets resolve at a project pr
       ? "../../../search.html"
       : path === "journal/index.html" ? "../search.html" : "search.html";
     assert.ok(html.includes(`href="${searchHref}">Search</a>`), `${path}: missing site-wide search link`);
+    const testimonialsHref = path.startsWith("journal/articles/")
+      ? "../../../testimonials.html"
+      : path === "journal/index.html" ? "../testimonials.html" : "testimonials.html";
+    assert.ok(html.includes(`href="${testimonialsHref}">Testimonials</a>`), `${path}: missing Testimonials link`);
     const base = new URL(`${prefix}${path}`, "https://example.test");
     for (const match of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
       const target = new URL(match[1].replaceAll("&amp;", "&"), base);
@@ -81,6 +85,8 @@ test("site search index covers articles, projects, credentials and internal dest
   assert.ok(searchIndex.some(entry => entry.title === "Marketo Lead Uploader" && entry.url === "projects.html#marketo-lead-uploader"));
   assert.ok(searchIndex.some(entry => entry.type === "Credentials page"
     && entry.content.includes("Adobe Certified Master - Adobe Analytics Architect")));
+  assert.ok(searchIndex.some(entry => entry.title === "Testimonials"
+    && entry.type === "Testimonials page" && entry.url === "testimonials.html"));
   assert.ok(searchIndex.some(entry => entry.title.startsWith("Understanding Merchandising eVars")
     && entry.content.includes("binding event")));
   for (const entry of searchIndex.filter(item => !item.external)) {
