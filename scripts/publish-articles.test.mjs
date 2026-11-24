@@ -82,6 +82,8 @@ test("site search index covers articles, projects, credentials and internal dest
     && entry.external && entry.url.startsWith("https://experienceleague.adobe.com/")));
   assert.ok(searchIndex.some(entry => entry.title === "Adobe Web SDK: Transforming Customer Experiences at Enterprise Scale"
     && entry.external && entry.url.startsWith("https://www.merkle.com/")));
+  assert.ok(searchIndex.some(entry => entry.title === "How to govern third-party scripts when a trusted platform becomes the attack vector"
+    && entry.external && entry.url === "https://www.linkedin.com/pulse/how-govern-third-party-scripts-when-trusted-platform-becomes-sainath-ouqzc/"));
   assert.ok(searchIndex.some(entry => entry.title === "Marketo Lead Uploader" && entry.url === "projects.html#marketo-lead-uploader"));
   assert.ok(searchIndex.some(entry => entry.type === "Credentials page"
     && entry.content.includes("Adobe Certified Master - Adobe Analytics Architect")));
@@ -234,6 +236,7 @@ test("linked articles appear in chronological order with their covers and origin
   const journal = await read("journal/index.html");
   const cards = journal.match(/<article class="article-card"[\s\S]*?<\/article>/g);
   const expectedSources = [
+    "how-govern-third-party-scripts-when-trusted-platform-becomes-sainath-ouqzc",
     "custom-aka-saint-classification-adobe-analytics-sainath-revankar",
     "adobe-target-cja-reporting-gap-can-surface-days-before-revankar-h7erc",
     "what-your-best-audience-already-exists-outside-adobe-sainath-revankar-vdyuc",
@@ -522,7 +525,8 @@ test("journal and project search, topic filters and pagination work with the pub
   assert.equal(journalResults.textContent, `Showing 7–12 of ${articles.length + linkedArticles.length} articles`);
   filters[1].click();
   assert.equal(visible(cards), 6);
-  assert.equal(journalResults.textContent, "Showing 1–6 of 25 articles");
+  const analyticsCount = cards.filter(card => card.dataset.category.split(" ").includes("analytics")).length;
+  assert.equal(journalResults.textContent, `Showing 1–6 of ${analyticsCount} articles`);
   filters[2].click();
   assert.equal(visible(cards), 6);
   search.value = "Classification";

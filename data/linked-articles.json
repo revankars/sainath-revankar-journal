@@ -1,5 +1,14 @@
 [
   {
+    "title": "How to govern third-party scripts when a trusted platform becomes the attack vector",
+    "description": "A governance framework for third-party scripts, vendor-side code changes and approvals, with practical monitoring and incident-response controls.",
+    "category": "Script Governance & Third-Party Risk",
+    "filters": ["architecture", "analytics", "data"],
+    "date": "2026-11-23",
+    "source": "https://www.linkedin.com/pulse/how-govern-third-party-scripts-when-trusted-platform-becomes-sainath-ouqzc/",
+    "cover": "third-party-script-governance.jpg"
+  },
+  {
     "title": "How to design event forwarding rules that scale",
     "description": "A practical architecture for maintainable Adobe Experience Platform Event Forwarding, from payload preparation to explicit, scalable routing rules.",
     "category": "Adobe Experience Platform",
